@@ -1,6 +1,5 @@
-﻿namespace Derby.Engine.Models.Board.Lanes.Fields
+﻿namespace Derby.Engine.Models.Board.Lanes.Fields;
+
+public interface IField
 {
-    public interface IField
-    {
-    }
 }

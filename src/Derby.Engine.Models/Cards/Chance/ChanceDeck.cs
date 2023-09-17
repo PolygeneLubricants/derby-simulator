@@ -1,13 +1,11 @@
-﻿namespace Derby.Engine.Models.Cards;
+﻿namespace Derby.Engine.Models.Cards.Chance;
 
-public class ChanceDeck
+public class ChanceDeck : BaseDeck<ChanceCard>
 {
     public ChanceDeck()
     {
         Deck = Populate();
     }
-
-    public IList<ChanceCard> Deck { get; set; }
 
     private IList<ChanceCard> Populate()
     {

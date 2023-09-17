@@ -9,4 +9,10 @@ public class Horse
     public required int Years { get; init; }
 
     public required Color Color { get; init; }
+
+    public int GetMoves(int turn)
+    {
+        var nextMoves = turn % Moves.Count; // Wrap around if turn is more than max moves.
+        return Moves[nextMoves];
+    }
 }

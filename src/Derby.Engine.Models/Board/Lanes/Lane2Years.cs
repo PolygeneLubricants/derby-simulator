@@ -8,6 +8,7 @@ public class Lane2Years : BaseLane
     {
         return new List<IField>
         {
+            new StartField(),
             new NeutralField(),
             new GallopField(),
             new NeutralField(),
