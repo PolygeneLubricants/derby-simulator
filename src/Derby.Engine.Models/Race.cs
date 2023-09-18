@@ -4,6 +4,7 @@ using Derby.Engine.Models.Cards.Chance;
 using Derby.Engine.Models.Cards.Gallop;
 using Derby.Engine.Models.Horses;
 using Derby.Engine.Models.Turns;
+using Derby.Engine.Models.Turns.Resolutions;
 
 namespace Derby.Engine.Models;
 
@@ -15,38 +16,31 @@ public class Race
         {
             Board = new GameBoard(),
             GallopDeck = new GallopDeck(),
-            ChanceDeck = new ChanceDeck()
-        };
+            ChanceDeck = new ChanceDeck(),
+            HorsesInRace = Register(horsesToRace).ToList()
+    };
 
         _turnResolver = new TurnResolver();
-        HorsesInRace = Register(horsesToRace);
     }
 
     public RaceState State { get; init; }
 
-    public IList<HorseInRace> HorsesInRace { get; init; }
+    private readonly TurnResolver _turnResolver;
 
-    private TurnResolver _turnResolver;
-
-    public TurnResolution ResolveTurn()
+    public ITurnResolution ResolveTurn()
     {
-        var horseToPlay = HorsesInRace[State.NextInTurn];
+        var horseToPlay = State.GetNextHorseInRace();
         return _turnResolver.ResolveTurn(horseToPlay, State);
     }
 
-    private IList<HorseInRace> Register(IEnumerable<OwnedHorse> horsesToRace)
+    private IEnumerable<HorseInRace> Register(IEnumerable<OwnedHorse> horsesToRace)
     {
-        foreach (var ownedHorse in horsesToRace)
-        {
-            Register(ownedHorse);
-        }
+        return horsesToRace.Select(Register);
     }
 
     private HorseInRace Register(OwnedHorse ownedHorse)
     {
-        var horseInRace = new HorseInRace { OwnedHorse = ownedHorse };
-        horseInRace.Lane = MapLane(ownedHorse.Horse);
-        horseInRace.Lane.Register(ownedHorse);
+        var horseInRace = new HorseInRace { OwnedHorse = ownedHorse, Lane = MapLane(ownedHorse.Horse) };
         return horseInRace;
     }
 

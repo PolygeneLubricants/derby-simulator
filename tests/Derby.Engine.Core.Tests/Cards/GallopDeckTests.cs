@@ -1,5 +1,4 @@
-﻿using Derby.Engine.Models.Cards;
-using Derby.Engine.Models.Cards.Gallop;
+﻿using Derby.Engine.Models.Cards.Gallop;
 
 namespace Derby.Engine.Core.Models.Tests.Cards;
 

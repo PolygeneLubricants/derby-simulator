@@ -15,7 +15,7 @@ public class HorseCollection
     public IList<Horse> Year4Horses { get; }
     public IList<Horse> Year5Horses { get; }
 
-    // DATA MOVE TO JSON
+    // TODO: Convert to state JSON object to load on init.
     private static IList<Horse> Populate2Year()
     {
         return new List<Horse>
