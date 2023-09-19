@@ -121,10 +121,10 @@ public class RaceTestBuilder
             CardEffect = new NoEffect()
         };
 
-        return WithNoEffectGallopCard(card);
+        return WithGallopCard(card);
     }
 
-    public RaceTestBuilder WithNoEffectGallopCard(GallopCard card)
+    public RaceTestBuilder WithGallopCard(GallopCard card)
     {
         _gallopDeck.Deck.Add(card);
 

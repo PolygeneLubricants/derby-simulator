@@ -1,9 +1,9 @@
 ﻿using Derby.Engine.Race.Board.Lanes.Fields;
-using Derby.Engine.Race.Cards.Chance.Effects;
+using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestModels;
 
-namespace Derby.Engine.Race.FunctionalTests.Tests.ChanceEffects;
+namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects;
 
 public class NoEffectTests
 {
@@ -11,11 +11,11 @@ public class NoEffectTests
     public void NoEffect_WhenCardDrawn_NoEffect()
     {
         // Arrange
-        var card1 = new ChanceCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
-        var race = builder.WithLane(new List<IField> { new StartField(0), new ChanceField(100), new GoalField(200) }, 2)
+        var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)
-            .WithChanceCard(card1)
+            .WithGallopCard(card1)
             .Build();
 
         // Act
@@ -31,12 +31,12 @@ public class NoEffectTests
     public void NoEffect_WhenCardDrawnTwice_NoEffect()
     {
         // Arrange
-        var card1 = new ChanceCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
-        var race = builder.WithLane(new List<IField> { new StartField(0), new ChanceField(100), new GoalField(200) }, 2)
+        var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)
             .WithHorseInRace(new[] { 1 }, out _)
-            .WithChanceCard(card1)
+            .WithGallopCard(card1)
             .Build();
 
         // Act
@@ -53,14 +53,14 @@ public class NoEffectTests
     public void NoEffect_WhenDifferentCardsDrawnOnce_NoEffect()
     {
         // Arrange
-        var card1 = new ChanceCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
-        var card2 = new ChanceCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card2 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
-        var race = builder.WithLane(new List<IField> { new StartField(0), new ChanceField(100), new GoalField(200) }, 2)
+        var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)
             .WithHorseInRace(new[] { 1 }, out _)
-            .WithChanceCard(card1)
-            .WithChanceCard(card2)
+            .WithGallopCard(card1)
+            .WithGallopCard(card2)
             .Build();
 
         // Act

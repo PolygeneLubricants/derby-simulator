@@ -39,6 +39,14 @@ public class Race
             return new DrawTurnResolution();
         }
 
-        return _turnResolver.ResolveTurn(horseToPlay, State);
+        var resolution = _turnResolver.ResolveTurn(horseToPlay, State);
+        CleanupTurn(State);
+        return resolution;
+    }
+
+    private void CleanupTurn(RaceState state)
+    {
+        state.IncrementTurnIfApplicable();
+        state.IncrementNextInTurnIfApplicable();
     }
 }

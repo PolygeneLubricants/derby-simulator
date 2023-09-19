@@ -29,7 +29,14 @@ public class RaceState
 
     public IList<HorseInRace> GetScore()
     {
-        return HorsesInRace.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
+        var horsesWhoHasNotCrashed = HorsesInRace
+            .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).All(resolution => !resolution.CountAsLast));
+
+        var horsesWhoHasCrashed = HorsesInRace
+            .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).Any(resolution => resolution.CountAsLast)).Reverse();
+
+        var unmodifiedScore = horsesWhoHasNotCrashed.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
+        return unmodifiedScore.Concat(horsesWhoHasCrashed).ToList();
     }
 
     public HorseInRace GetLastHorse()

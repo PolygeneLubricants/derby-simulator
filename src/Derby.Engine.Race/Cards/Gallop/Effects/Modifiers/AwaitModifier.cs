@@ -26,7 +26,7 @@ public class AwaitModifier : IModifier
     {
         if (_awaitType == AwaitType.All)
         {
-            if (state.GetLastHorse() == horseWithModifier)
+            if (state.GetLastHorse().GetLaneTiebreaker() >= horseWithModifier.GetLaneTiebreaker())
             {
                 return new ModifierResolution { IsApplicable = false };
             }

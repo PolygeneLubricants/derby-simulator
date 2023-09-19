@@ -49,7 +49,6 @@ public class TurnResolver
         moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn, modifierResolution);
         var fieldHorseLandedOn = horseToPlay.Move(moves);
         var turnResolution = ResolveTurn(horseToPlay, state, fieldHorseLandedOn);
-        CleanupTurn(state);
 
         return turnResolution;
     }
@@ -75,12 +74,6 @@ public class TurnResolver
 
         horseToPlay.Modifiers = applicableModifiers;
         return resolutions;
-    }
-
-    private void CleanupTurn(RaceState state)
-    {
-        state.IncrementTurnIfApplicable();
-        state.IncrementNextInTurnIfApplicable();
     }
 
     private ITurnResolution ResolveTurn(
