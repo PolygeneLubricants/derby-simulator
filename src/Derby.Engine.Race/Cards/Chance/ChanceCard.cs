@@ -6,6 +6,6 @@ public class ChanceCard : BaseCard<ChanceCardResolution, IChanceCardEffect>
 {
     public override ChanceCardResolution Resolve(HorseInRace horseToPlay, RaceState state)
     {
-        throw new NotImplementedException();
+        return CardEffect.Resolve(horseToPlay, state);
     }
 }

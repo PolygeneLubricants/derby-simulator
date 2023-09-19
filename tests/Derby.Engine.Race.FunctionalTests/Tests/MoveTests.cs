@@ -1,7 +1,7 @@
 ﻿using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
 using Derby.Engine.Race.Turns.Resolutions;
 
-namespace Derby.Engine.Race.FunctionalTests;
+namespace Derby.Engine.Race.FunctionalTests.Tests;
 
 public class MoveTests
 {
@@ -45,7 +45,7 @@ public class MoveTests
         Assert.Equal(0, race.State.HorsesInRace.First().FieldsFromGoal);
         Assert.Equal(2, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
-        
+
         var horseWonTurnResolution = resolutionTurn2 as HorseWonTurnResolution;
         Assert.Equal(1, horseWonTurnResolution.Score.Count);
         Assert.Equal(race.State.HorsesInRace.First(), horseWonTurnResolution.Score.First());
@@ -95,7 +95,7 @@ public class MoveTests
 
         // Assert
         Assert.All(resolutions, resolution => Assert.IsType<EndTurnTurnResolution>(resolution));
-        
+
         Assert.Equal(1, race.State.HorsesInRace[0].Location);
         Assert.Equal(8, race.State.HorsesInRace[0].FieldsFromGoal);
         Assert.Equal(2, race.State.HorsesInRace[1].Location);
@@ -190,9 +190,9 @@ public class MoveTests
         var iterationTimeout = 50;
         var builder = new RaceTestBuilder();
         var race = builder.WithLane(33)
-            .WithHorseInRace(new[] { 1,2,3,3,4,2,4,3,1,3,2,4 }, out var winnerHorse)
-            .WithHorseInRace(new[] { 4,3,2,2,2,3,2,4,2,3,1,4 }, out _)
-            .WithHorseInRace(new[] { 4,3,2,3,2,3,4,1,4,3,2,1 }, out _)
+            .WithHorseInRace(new[] { 1, 2, 3, 3, 4, 2, 4, 3, 1, 3, 2, 4 }, out var winnerHorse)
+            .WithHorseInRace(new[] { 4, 3, 2, 2, 2, 3, 2, 4, 2, 3, 1, 4 }, out _)
+            .WithHorseInRace(new[] { 4, 3, 2, 3, 2, 3, 4, 1, 4, 3, 2, 1 }, out _)
             .WithGallopNoEffectGallopCard()
             .Build();
 
@@ -216,5 +216,41 @@ public class MoveTests
 
         Assert.Equal(11, race.State.CurrentTurn);
         Assert.Equal(1, race.State.NextHorseInTurn);
+    }
+
+    [Fact]
+    public void Move_WhenTwoHorsesAreInSeparateLane_FastestWins()
+    {
+        // Arrange
+        var iterationTimeout = 50;
+        var builder = new RaceTestBuilder();
+        var race =
+            builder
+                .WithLane(10, 2)
+                .WithLane(20, 3)
+                .WithHorseInRace(new[] { 1, 2, 1 }, 3, out _)
+                .WithHorseInRace(new[] { 1, 2, 1 }, 2, out var winnerHorse)
+                .WithGallopNoEffectGallopCard()
+                .Build();
+
+        // Act
+        ITurnResolution resolution = null;
+        var iteration = 0;
+        while (resolution is not HorseWonTurnResolution && iteration < iterationTimeout)
+        {
+            resolution = race.ResolveTurn();
+
+            iteration++;
+        }
+
+        // Assert
+        Assert.IsType<HorseWonTurnResolution>(resolution);
+        var horseWonResolution = resolution as HorseWonTurnResolution;
+        Assert.Equal(winnerHorse, horseWonResolution.Score.First().OwnedHorse);
+        Assert.Equal(9, race.State.HorsesInRace[0].Location);
+        Assert.Equal(9, race.State.HorsesInRace[1].Location);
+
+        Assert.Equal(7, race.State.CurrentTurn);
+        Assert.Equal(0, race.State.NextHorseInTurn);
     }
 }

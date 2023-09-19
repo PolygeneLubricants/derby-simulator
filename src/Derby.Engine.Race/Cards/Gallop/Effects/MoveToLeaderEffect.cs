@@ -17,6 +17,7 @@ public class MoveToLeaderEffect : IGallopCardEffect
             return new GallopCardResolution();
         }
 
+        // TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
         var moves = leader.Location - horseToPlay.Location;
         if (_position == Position.Behind)
         {

@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Board;
 using Derby.Engine.Race.Board.Lanes.Fields;
+using Derby.Engine.Race.Cards;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Cards.Gallop.Effects;
@@ -41,6 +42,11 @@ public class RaceTestBuilder
 
     public RaceTestBuilder WithHorseInRace(IEnumerable<int> moves, out OwnedHorse horseAdded)
     {
+        return WithHorseInRace(moves, 2, out horseAdded);
+    }
+
+    public RaceTestBuilder WithHorseInRace(IEnumerable<int> moves, int years, out OwnedHorse horseAdded)
+    {
         var stableCode = _availableStables[0];
         _availableStables.RemoveAt(0);
 
@@ -50,7 +56,7 @@ public class RaceTestBuilder
             {
                 Color = Color.Black,
                 Moves = moves.ToList(),
-                Years = 2,
+                Years = years,
                 Name = Guid.NewGuid().ToString()
             },
             Owner = new Player
@@ -70,15 +76,38 @@ public class RaceTestBuilder
 
     public RaceTestBuilder WithLane(int length)
     {
+        return WithLane(length, 2);
+    }
+
+    public RaceTestBuilder WithLane(int length, int years)
+    {
         var fields =
             Enumerable.Range(0, 1).Select(_ => new StartField())
                 .Concat<IField>(Enumerable.Range(0, length - 2).Select(_ => new NeutralField()))
                 .Concat(Enumerable.Range(0, 1).Select(_ => new GoalField())).ToList();
 
-        _board.Lanes = new LaneCollection
+        return WithLane(fields, years);
+    }
+
+    public RaceTestBuilder WithLane(IList<IField> fields, int years)
+    {
+        switch (years)
         {
-            Lane2Years = new CustomLane(fields)
-        };
+            case 2:
+                _board.Lanes.Lane2Years = new CustomLane(fields);
+                break;
+            case 3:
+                _board.Lanes.Lane3Years = new CustomLane(fields);
+                break;
+            case 4:
+                _board.Lanes.Lane4Years = new CustomLane(fields);
+                break;
+            case 5:
+                _board.Lanes.Lane5Years = new CustomLane(fields);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException($"{years}");
+        }
 
         return this;
     }
@@ -94,6 +123,12 @@ public class RaceTestBuilder
 
         _gallopDeck.Deck.Add(card);
 
+        return this;
+    }
+
+    public RaceTestBuilder WithChanceCard(ChanceCard chanceCard)
+    {
+        _chanceDeck.Deck.Add(chanceCard);
         return this;
     }
 }

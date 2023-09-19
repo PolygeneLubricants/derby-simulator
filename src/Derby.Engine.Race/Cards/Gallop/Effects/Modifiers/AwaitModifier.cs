@@ -1,5 +1,5 @@
 ﻿namespace Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
-
+// TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
 public class AwaitModifier : IModifier
 {
     private readonly AwaitType _awaitType;
