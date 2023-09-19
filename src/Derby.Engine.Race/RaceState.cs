@@ -36,7 +36,7 @@ public class RaceState
             .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).Any(resolution => resolution.CountAsLast)).Reverse();
 
         var unmodifiedScore = horsesWhoHasNotCrashed.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
-        return unmodifiedScore.Concat(horsesWhoHasCrashed).ToList();
+        return unmodifiedScore.Concat(horsesWhoHasCrashed).Where(horse => !horse.Eliminated).ToList();
     }
 
     public HorseInRace GetLastHorse()
@@ -84,8 +84,16 @@ public class RaceState
 
     public void IncrementNextInTurnIfApplicable()
     {
-        NextHorseInTurn++;
-        NextHorseInTurn %= GetMovableHorsesInRace().Count();
+        var movableHorsesInRace = GetMovableHorsesInRace().Count();
+        if (movableHorsesInRace == 0)
+        {
+            NextHorseInTurn = 0;
+        }
+        else
+        {
+            NextHorseInTurn++;
+            NextHorseInTurn %= movableHorsesInRace;
+        }
     }
 
     private bool ShouldIncrementTurn()
