@@ -46,12 +46,12 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
 
             var chanceCardDrawTimes = 0;
             chanceCard.OnDraw += () => { chanceCardDrawTimes++; };
-            _ = race.ResolveTurn();
-            _ = race.ResolveTurn();
-            _ = race.ResolveTurn();
-            _ = race.ResolveTurn();
-            _ = race.ResolveTurn();
-            _ = race.ResolveTurn();
+            _ = race.ResolveTurn(); // Moves 2, draw steady pace
+            _ = race.ResolveTurn(); // Move 4
+            _ = race.ResolveTurn(); // Move 4
+            _ = race.ResolveTurn(); // Move 4
+            _ = race.ResolveTurn(); // Move 4
+            _ = race.ResolveTurn(); // Move 4
 
             // Assert
             Assert.Equal(1, gallopCardDrawTimes);
