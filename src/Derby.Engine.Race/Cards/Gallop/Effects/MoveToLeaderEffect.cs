@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards.Gallop.Effects;
+﻿using Derby.Engine.Race.Board.Lanes;
+
+namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
 public class MoveToLeaderEffect : IGallopCardEffect
 {
@@ -17,12 +19,9 @@ public class MoveToLeaderEffect : IGallopCardEffect
             return new GallopCardResolution();
         }
 
-        // TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
-        var moves = leader.Location - horseToPlay.Location;
-        if (_position == Position.Behind)
-        {
-            moves--;
-        }
+        var leaderTiebreaker = leader.GetLaneTiebreaker();
+        var closestLocation = GetClosestLocation(horseToPlay, leaderTiebreaker, _position);
+        var moves = closestLocation - horseToPlay.Location;
 
         // Ignore max move rule.
         var field = horseToPlay.Move(moves);
@@ -30,6 +29,19 @@ public class MoveToLeaderEffect : IGallopCardEffect
         {
             NewField = field
         };
+    }
+
+    private int GetClosestLocation(HorseInRace horseToPlay, int leaderTiebreaker, Position position)
+    {
+        switch (position)
+        {
+            case Position.Behind:
+                return horseToPlay.Lane.GetClosestLocation(leaderTiebreaker, SeekerStrategy.Before);
+            case Position.OnPar:
+                return horseToPlay.Lane.GetClosestLocation(leaderTiebreaker, SeekerStrategy.Closest);
+            default:
+                throw new ArgumentOutOfRangeException(nameof(position), position, null);
+        }
     }
 }
 

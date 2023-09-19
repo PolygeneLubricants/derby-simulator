@@ -29,25 +29,22 @@ public class RaceState
 
     public IList<HorseInRace> GetScore()
     {
-        return HorsesInRace.OrderBy(horse => horse.FieldsFromGoal).ToList();
+        return HorsesInRace.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
     }
 
     public HorseInRace GetLastHorse()
     {
-        // TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
-        return HorsesInRace.Reverse().OrderByDescending(horse => horse.FieldsFromGoal).First();
+        return HorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).First();
     }
 
     public HorseInRace GetLeaderHorse()
     {
-        // TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
-        return HorsesInRace.OrderBy(horse => horse.FieldsFromGoal).First();
+        return HorsesInRace.OrderByDescending(horse => horse.GetLaneTiebreaker()).First();
     }
 
     public HorseInRace? GetHorseBehind(HorseInRace horseToFindBehind)
     {
-        // TODO: Adjust for curvature. See photos/curvature-example.png. FIND-ID: #CURVATURE.
-        var horsesBySlowest = HorsesInRace.OrderBy(horse => horse.Location).ToList();
+        var horsesBySlowest = HorsesInRace.OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
         var indexOfHorseToFindBehind = horsesBySlowest.IndexOf(horseToFindBehind);
         if (indexOfHorseToFindBehind == 0)
         {

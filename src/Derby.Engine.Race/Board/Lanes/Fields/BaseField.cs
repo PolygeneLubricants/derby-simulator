@@ -2,5 +2,11 @@
 {
     public abstract class BaseField : IField
     {
+        protected BaseField(int tieBreaker)
+        {
+            TieBreaker = tieBreaker;
+        }
+
+        public int TieBreaker { get; }
     }
 }

@@ -2,5 +2,8 @@
 {
     public class NeutralField : BaseField
     {
+        public NeutralField(int tieBreaker) : base(tieBreaker)
+        {
+        }
     }
 }

@@ -81,10 +81,10 @@ public class RaceTestBuilder
 
     public RaceTestBuilder WithLane(int length, int years)
     {
-        var fields =
-            Enumerable.Range(0, 1).Select(_ => new StartField())
-                .Concat<IField>(Enumerable.Range(0, length - 2).Select(_ => new NeutralField()))
-                .Concat(Enumerable.Range(0, 1).Select(_ => new GoalField())).ToList();
+        var startField = Enumerable.Range(0, 1).Select(index => new StartField(index * 100)).ToList();
+        var neutralFields = Enumerable.Range(0, length - 2).Select(index => new NeutralField((1+index) * 100)).ToList();
+        var goalField = Enumerable.Range(0, 1).Select(index => new GoalField((startField.Count + neutralFields.Count + index) * 100)).ToList();
+        var fields = startField.Concat<IField>(neutralFields).Concat<IField>(goalField).ToList();
 
         return WithLane(fields, years);
     }
@@ -112,7 +112,7 @@ public class RaceTestBuilder
         return this;
     }
 
-    public RaceTestBuilder WithGallopNoEffectGallopCard()
+    public RaceTestBuilder WithNoEffectGallopCard()
     {
         var card = new GallopCard
         {
@@ -121,9 +121,25 @@ public class RaceTestBuilder
             CardEffect = new NoEffect()
         };
 
+        return WithNoEffectGallopCard(card);
+    }
+
+    public RaceTestBuilder WithNoEffectGallopCard(GallopCard card)
+    {
         _gallopDeck.Deck.Add(card);
 
         return this;
+    }
+
+    public RaceTestBuilder WithNoEffectChanceCard()
+    {
+        var card = new ChanceCard
+        {
+            Title = "",
+            Description = "",
+            CardEffect = new Cards.Chance.Effects.NoEffect()
+        };
+        return WithChanceCard(card);
     }
 
     public RaceTestBuilder WithChanceCard(ChanceCard chanceCard)

@@ -2,5 +2,8 @@
 {
     public class GoalField : BaseField
     {
+        public GoalField(int tieBreaker) : base(tieBreaker)
+        {
+        }
     }
 }

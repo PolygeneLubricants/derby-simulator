@@ -2,5 +2,8 @@
 {
     public class ChanceField : BaseField
     {
+        public ChanceField(int tieBreaker) : base(tieBreaker)
+        {
+        }
     }
 }

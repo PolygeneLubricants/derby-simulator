@@ -22,6 +22,9 @@ public class HorseInRace
     public int Location { get; private set; }
 
     public int FieldsFromGoal => Lane.Fields.Count - Location - 1;
+
+    public int GetLaneTiebreaker() => Lane.GetTiebreaker(Location);
+
     public IList<IModifier> Modifiers { get; set; }
 
     public void Eliminate()
