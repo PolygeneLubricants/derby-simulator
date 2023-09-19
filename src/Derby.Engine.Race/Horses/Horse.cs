@@ -20,7 +20,7 @@ public class Horse
 
     public int GetMoves(int turn, IList<ModifierResolution> modifierResolution)
     {
-        var nextMoves = turn % Moves.Count; // Wrap around if turn is more than max moves.
+        var nextMoves = Moves[turn % Moves.Count]; // Wrap around if turn is more than max moves.
         if (!modifierResolution.Any())
         {
             return nextMoves;

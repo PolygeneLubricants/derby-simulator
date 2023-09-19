@@ -129,7 +129,7 @@ public class TurnResolver
             case GoalField _:
                 return new HorseWonTurnResolution(state.GetScore());
             default:
-                throw new InvalidTurnStateException();
+                throw new InvalidTurnStateException(fieldHorseLandedOn);
         }
     }
 }

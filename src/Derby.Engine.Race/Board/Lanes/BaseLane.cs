@@ -4,12 +4,10 @@ namespace Derby.Engine.Race.Board.Lanes;
 
 public abstract class BaseLane : ILane
 {
-    protected BaseLane()
+    protected BaseLane(IList<IField> fields)
     {
-        Fields = PopulateLane();
+        Fields = fields;
     }
 
     public IList<IField> Fields { get; }
-
-    protected abstract IList<IField> PopulateLane();
 }

@@ -4,7 +4,11 @@ namespace Derby.Engine.Race.Board.Lanes;
 
 public class Lane5Years : BaseLane
 {
-    protected override IList<IField> PopulateLane()
+    public Lane5Years() : base(PopulateLane())
+    {
+    }
+
+    private static IList<IField> PopulateLane()
     {
         return new List<IField>
         {

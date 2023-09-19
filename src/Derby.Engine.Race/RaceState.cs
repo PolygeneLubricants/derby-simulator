@@ -1,24 +1,28 @@
 ﻿using Derby.Engine.Race.Board;
+using Derby.Engine.Race.Board.Lanes;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
+using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race;
 
 public class RaceState
 {
-    public RaceState()
+    public RaceState(GameBoard gameBoard, IEnumerable<OwnedHorse> horsesToRace)
     {
+        Board = gameBoard;
+        HorsesInRace = Register(horsesToRace).ToList();
         NextHorseInTurn = 0;
         CurrentTurn = 0;
     }
 
-    public required GameBoard Board { get; init; }
+    public GameBoard Board { get; }
 
     public required ChanceDeck ChanceDeck { get; init; }
 
     public required GallopDeck GallopDeck { get; init; }
 
-    public required IList<HorseInRace> HorsesInRace { get; init; }
+    public IList<HorseInRace> HorsesInRace { get; }
 
     public int NextHorseInTurn { get; private set; }
     public int CurrentTurn { get; private set; }
@@ -84,5 +88,28 @@ public class RaceState
     private int GetMovableHorsesInRace()
     {
         return HorsesInRace.Count(h => !h.Eliminated);
+    }
+
+    private IEnumerable<HorseInRace> Register(IEnumerable<OwnedHorse> horsesToRace)
+    {
+        return horsesToRace.Select(Register);
+    }
+
+    private HorseInRace Register(OwnedHorse ownedHorse)
+    {
+        var horseInRace = new HorseInRace { OwnedHorse = ownedHorse, Lane = MapLane(ownedHorse.Horse) };
+        return horseInRace;
+    }
+
+    private ILane MapLane(Horse horse)
+    {
+        return horse.Years switch
+        {
+            2 => Board.Lanes.Lane2Years,
+            3 => Board.Lanes.Lane3Years,
+            4 => Board.Lanes.Lane4Years,
+            5 => Board.Lanes.Lane5Years,
+            _ => throw new ArgumentException($"Horse age outside registered lanes. Age: '{horse.Years}'.")
+        };
     }
 }
