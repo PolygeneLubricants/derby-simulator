@@ -2,6 +2,8 @@
 using Derby.Engine.Race.Board.Lanes.Fields;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
+using Derby.Engine.Race.Cards.Gallop.Effects;
+using Derby.Engine.Race.FunctionalTests.Utilities.TestModels;
 using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
@@ -37,7 +39,7 @@ public class RaceTestBuilder
         };
     }
 
-    public RaceTestBuilder WithHorseInRace(IEnumerable<int> moves)
+    public RaceTestBuilder WithHorseInRace(IEnumerable<int> moves, out OwnedHorse horseAdded)
     {
         var stableCode = _availableStables[0];
         _availableStables.RemoveAt(0);
@@ -61,6 +63,7 @@ public class RaceTestBuilder
         };
 
         _horsesInRace.Add(ownedHorse);
+        horseAdded = ownedHorse;
 
         return this;
     }
@@ -76,6 +79,20 @@ public class RaceTestBuilder
         {
             Lane2Years = new CustomLane(fields)
         };
+
+        return this;
+    }
+
+    public RaceTestBuilder WithGallopNoEffectGallopCard()
+    {
+        var card = new GallopCard
+        {
+            Title = "",
+            Description = "",
+            CardEffect = new NoEffect()
+        };
+
+        _gallopDeck.Deck.Add(card);
 
         return this;
     }

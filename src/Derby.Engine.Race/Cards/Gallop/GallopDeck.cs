@@ -1,17 +1,21 @@
-﻿using Derby.Engine.Race.Cards.Chance;
-using Derby.Engine.Race.Cards.Gallop.Effects;
+﻿using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
 namespace Derby.Engine.Race.Cards.Gallop;
 
 public class GallopDeck : BaseDeck<GallopCard>
 {
+    public GallopDeck() : base(new List<GallopCard>())
+    {
+    }
+
+    public GallopDeck(IList<GallopCard> deck) : base(deck)
+    {
+    }
+
     public static GallopDeck DefaultDeck()
     {
-        return new GallopDeck
-        {
-            Deck = Populate()
-        };
+        return new GallopDeck(Populate());
     }
 
     // TODO: Convert to state JSON object to load on init.

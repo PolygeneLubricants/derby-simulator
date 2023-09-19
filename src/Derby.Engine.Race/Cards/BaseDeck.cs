@@ -2,8 +2,9 @@
 
 public class BaseDeck<T>
 {
-    public BaseDeck()
+    public BaseDeck(IList<T> deck)
     {
+        Deck = deck;
         DiscardPile = new List<T>();
     }
 

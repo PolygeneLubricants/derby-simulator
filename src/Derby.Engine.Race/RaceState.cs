@@ -58,13 +58,13 @@ public class RaceState
 
     public HorseInRace? GetNextHorseInRace()
     {
-        var horsesInRace = HorsesInRace.Where(h => !h.Eliminated).ToList();
-        if (!horsesInRace.Any())
+        var horsesStillInRace = GetMovableHorsesInRace().ToList();
+        if (!horsesStillInRace.Any())
         {
             return null;
         }
 
-        return horsesInRace[NextHorseInTurn];
+        return horsesStillInRace[NextHorseInTurn];
     }
 
     public void IncrementTurnIfApplicable()
@@ -77,17 +77,18 @@ public class RaceState
 
     public void IncrementNextInTurnIfApplicable()
     {
-        NextHorseInTurn %= GetMovableHorsesInRace();
+        NextHorseInTurn++;
+        NextHorseInTurn %= GetMovableHorsesInRace().Count();
     }
 
     private bool ShouldIncrementTurn()
     {
-        return NextHorseInTurn >= GetMovableHorsesInRace() - 1;
+        return NextHorseInTurn >= GetMovableHorsesInRace().Count() - 1;
     }
 
-    private int GetMovableHorsesInRace()
+    private IEnumerable<HorseInRace> GetMovableHorsesInRace()
     {
-        return HorsesInRace.Count(h => !h.Eliminated);
+        return HorsesInRace.Where(h => !h.Eliminated);
     }
 
     private IEnumerable<HorseInRace> Register(IEnumerable<OwnedHorse> horsesToRace)
