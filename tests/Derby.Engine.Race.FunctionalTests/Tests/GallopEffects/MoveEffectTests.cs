@@ -58,4 +58,32 @@ public class MoveEffectTests
         Assert.IsType<HorseWonTurnResolution>(goalResolution);
         Assert.Equal(1, drawnTimes);
     }
+
+    [Fact]
+    public void MoveEffect_WhenCardDrawnInHomeStretch_OnlyMovesOnEffectNotNatural()
+    {
+        // Arrange
+        var card1 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new MoveEffect(1) };
+        var builder = new RaceTestBuilder();
+        var race = builder.WithLane(new List<IField>
+            {
+                new StartField(0),
+                new NeutralField(100),
+                new NeutralField(200),
+                new GoalField(300)
+            }, 2)
+            .WithHorseInRace(new[] { 3, 1 }, out _)
+            .WithGallopCard(card1)
+            .Build();
+
+        // Act
+        var drawnTimes = 0;
+        card1.OnDraw += () => { drawnTimes++; };
+        _ = race.ResolveTurn(); // Home stretch, draw move card, move 1
+        _ = race.ResolveTurn(); // Move 1
+
+        // Assert
+        Assert.Equal(1, drawnTimes);
+        Assert.Equal(2, race.State.HorsesInRace[0].Location);
+    }
 }
