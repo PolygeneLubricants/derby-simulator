@@ -3,6 +3,7 @@ using Derby.Engine.Race.Board.Lanes.Fields;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
+using Derby.Engine.Race.Turns.Resolutions;
 
 namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects;
 
@@ -31,6 +32,42 @@ public class MoveToLeaderEffectTests
 
         // Assert
         Assert.Equal(2, race.State.HorsesInRace.First().Location);
+    }
+
+    [Theory]
+    [InlineData(1, typeof(EndTurnTurnResolution), 38)]
+    [InlineData(6, typeof(HorseWonTurnResolution), 40)]
+    public void MoveToLeader_AsGallopCard_BehaveAsGallopCard(int secondMovement, Type resolutionType, int expectedFinalLocation)
+    {
+        // Arrange
+        var card = new GallopCard { Title = "", Description = "", CardEffect = new HomeStretchCompositeEffect(new MoveEffect(99), new MoveToLeaderEffect(Position.Behind)) };
+        var builder = new RaceTestBuilder();
+        var race =
+            builder
+                .WithLane(new Lane2Years().Fields, 2)
+                .WithLane(new Lane3Years().Fields, 3)
+                .WithLane(new Lane4Years().Fields, 4)
+                .WithLane(new Lane5Years().Fields, 5)
+                .WithHorseInRace(new[] { 30, 1 }, 2, out var _)
+                .WithHorseInRace(new[] { 18, 2 }, 3, out var _)
+                .WithHorseInRace(new[] { 34, secondMovement }, 4, out var _)
+                .WithHorseInRace(new[] { 1, 2 }, 5, out var _)
+                .WithGallopCard(card)
+                .Build();
+
+        // Act
+        _ = race.ResolveTurn();
+        _ = race.ResolveTurn();
+        _ = race.ResolveTurn();
+        _ = race.ResolveTurn();
+
+        _ = race.ResolveTurn();
+        _ = race.ResolveTurn();
+        var finalResolution = race.ResolveTurn();
+
+        // Assert
+        Assert.IsType(resolutionType, finalResolution);
+        Assert.Equal(expectedFinalLocation, race.State.HorsesInRace[2].Location);
     }
 
     [Theory]
