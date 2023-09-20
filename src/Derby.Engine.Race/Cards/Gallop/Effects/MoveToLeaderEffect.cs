@@ -24,7 +24,7 @@ public class MoveToLeaderEffect : IGallopCardEffect
         var moves = closestLocation - horseToPlay.Location;
 
         // Ignore max move rule.
-        var field = horseToPlay.Move(moves);
+        var field = horseToPlay.Move(moves, MoveType.CardEffect);
         return new GallopCardResolution
         {
             NewField = field

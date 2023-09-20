@@ -18,8 +18,7 @@ public class TurnResolver
         }
 
         // Check move modifiers
-        var moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn, modifierResolution);
-        if (horseToPlay.NextTurnIsHomeStretch(moves) && !ShouldSkipGallopCard(modifierResolution))
+        if (horseToPlay.TurnIsHomeStretch(state.CurrentTurn) && !ShouldSkipGallopCard(modifierResolution))
         {
             var drawnGallopCard = state.GallopDeck.Draw();
             var gallopCardResolution = drawnGallopCard.Resolve(horseToPlay, state);
@@ -46,8 +45,8 @@ public class TurnResolver
             return new EndTurnTurnResolution();
         }
 
-        moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn, modifierResolution);
-        var fieldHorseLandedOn = horseToPlay.Move(moves);
+        var moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn, modifierResolution);
+        var fieldHorseLandedOn = horseToPlay.Move(moves, MoveType.Natural);
         var turnResolution = ResolveTurn(horseToPlay, state, fieldHorseLandedOn);
 
         return turnResolution;

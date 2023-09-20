@@ -10,6 +10,7 @@ public class HorseInRace
     {
         Location = 0;
         Eliminated = false;
+        HasMovedThisTurn = false;
         Modifiers = new List<IModifier>();
     }
 
@@ -27,19 +28,31 @@ public class HorseInRace
 
     public IList<IModifier> Modifiers { get; set; }
 
+    public bool HasMovedThisTurn { get; set; }
+
     public void Eliminate()
     {
         Eliminated = true;
     }
     
-    public bool NextTurnIsHomeStretch(int turnNumber)
+    public bool TurnIsHomeStretch(int turnNumber)
     {
+        if (HasMovedThisTurn)
+        {
+            return false;
+        }
+
         var moves = OwnedHorse.Horse.GetMoves(turnNumber);
         return moves >= FieldsFromGoal;
     }
 
-    public IField Move(int moves)
+    public IField Move(int moves, MoveType moveType)
     {
+        if (moveType == MoveType.Natural)
+        {
+            HasMovedThisTurn = true;
+        }
+
         Location += moves;
         
         if (Location >= Lane.Fields.Count)
@@ -50,4 +63,15 @@ public class HorseInRace
         var fieldHorseLandedOn = Lane.Fields[Location];
         return fieldHorseLandedOn;
     }
+
+    public void CleanupTurn()
+    {
+        HasMovedThisTurn = false;
+    }
+}
+
+public enum MoveType
+{
+    CardEffect, // Movement caused by a card effect.
+    Natural // Movement caused by the horse's natural movement.
 }

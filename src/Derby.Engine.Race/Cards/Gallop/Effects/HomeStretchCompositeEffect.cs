@@ -15,8 +15,7 @@ public class HomeStretchCompositeEffect : IGallopCardEffect
 
     public GallopCardResolution Resolve(HorseInRace horseToPlay, RaceState state)
     {
-        var moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn);
-        if (horseToPlay.NextTurnIsHomeStretch(moves))
+        if (horseToPlay.TurnIsHomeStretch(state.CurrentTurn))
         {
             return _effectWhenHomestretch.Resolve(horseToPlay, state);
         }

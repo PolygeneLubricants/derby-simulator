@@ -40,13 +40,14 @@ public class Race
         }
 
         var resolution = _turnResolver.ResolveTurn(horseToPlay, State);
-        CleanupTurn(State);
+        CleanupTurn(State, horseToPlay);
         return resolution;
     }
 
-    private void CleanupTurn(RaceState state)
+    private void CleanupTurn(RaceState state, HorseInRace horseToPlay)
     {
         state.IncrementTurnIfApplicable();
         state.IncrementNextInTurnIfApplicable();
+        horseToPlay.CleanupTurn();
     }
 }

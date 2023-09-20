@@ -11,7 +11,7 @@ public class NoEffectTests
     public void NoEffect_WhenCardDrawn_NoEffect()
     {
         // Arrange
-        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
         var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)
@@ -31,7 +31,7 @@ public class NoEffectTests
     public void NoEffect_WhenCardDrawnTwice_NoEffect()
     {
         // Arrange
-        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
         var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)
@@ -53,8 +53,8 @@ public class NoEffectTests
     public void NoEffect_WhenDifferentCardsDrawnOnce_NoEffect()
     {
         // Arrange
-        var card1 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
-        var card2 = new GallopCardWithDrawTrigger { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card1 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new NoEffect() };
+        var card2 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new NoEffect() };
         var builder = new RaceTestBuilder();
         var race = builder.WithLane(new List<IField> { new StartField(0), new GallopField(100), new GoalField(200) }, 2)
             .WithHorseInRace(new[] { 1 }, out _)

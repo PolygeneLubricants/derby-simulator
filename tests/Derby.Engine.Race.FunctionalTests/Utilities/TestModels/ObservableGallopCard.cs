@@ -2,7 +2,7 @@
 
 namespace Derby.Engine.Race.FunctionalTests.Utilities.TestModels;
 
-public class GallopCardWithDrawTrigger : GallopCard
+public class ObservableGallopCard : GallopCard
 {
     public override GallopCardResolution Resolve(HorseInRace horseToPlay, RaceState state)
     {
