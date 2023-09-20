@@ -66,26 +66,34 @@ public class RepositionSpecialEffectTests
                 .WithLane(new Lane2Years().Fields, 2)
                 .WithLane(new Lane3Years().Fields, 3)
                 .WithLane(new Lane4Years().Fields, 4)
-                .WithHorseInRace(new[] { 26, 1 }, 2, out var _)
-                .WithHorseInRace(new[] { 28, 4 }, 3, out var _)
-                .WithHorseInRace(new[] { 37, 3 }, 4, out var _)
+                .WithHorseInRace(new[] { 26, 1, 1, 0 }, 2, out var _)
+                .WithHorseInRace(new[] { 28, 4, 1, 0 }, 3, out var _)
+                .WithHorseInRace(new[] { 37, 3, 1, 1 }, 4, out var _)
                 .WithGallopCard(card)
                 .WithNoEffectChanceCard()
                 .Build();
 
         // Act
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
+        _ = race.ResolveTurn(); // 1 moves
+        _ = race.ResolveTurn(); // 2 moves
+        _ = race.ResolveTurn(); // 3 moves
 
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        var skipsTurn = race.ResolveTurn();
+        _ = race.ResolveTurn(); // 1 moves
+        _ = race.ResolveTurn(); // 2 moves
+        var skipsTurn = race.ResolveTurn(); // 3 ends turn and skips
+
+        _ = race.ResolveTurn(); // 1 moves
+        _ = race.ResolveTurn(); // 2 moves
+        _ = race.ResolveTurn(); // 3 skips turn
+
+        _ = race.ResolveTurn(); // 1 moves
+        _ = race.ResolveTurn(); // 2 moves
+        _ = race.ResolveTurn(); // 3 moves again
 
         // Assert
-        Assert.Equal(27, race.State.HorsesInRace[0].Location);
-        Assert.Equal(32, race.State.HorsesInRace[1].Location);
-        Assert.Equal(37, race.State.HorsesInRace[2].Location);
+        Assert.Equal(28, race.State.HorsesInRace[0].Location);
+        Assert.Equal(33, race.State.HorsesInRace[1].Location);
+        Assert.Equal(38, race.State.HorsesInRace[2].Location);
     }
 
     // I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang.

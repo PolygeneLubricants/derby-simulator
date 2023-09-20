@@ -8,7 +8,7 @@ public class RepositionSpecialEffect : IGallopCardEffect
         var leader = state.GetLeaderHorse();
         if (horseToPlay == leader)
         {
-            var skipEffect = new SkipTurnEffect();
+            var skipEffect = new EndTurnAndSkipEffect();
             return skipEffect.Resolve(horseToPlay, state);
         }
         else
