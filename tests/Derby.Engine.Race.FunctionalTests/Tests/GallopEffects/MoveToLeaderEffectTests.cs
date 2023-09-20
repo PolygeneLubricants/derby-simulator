@@ -22,7 +22,7 @@ public class MoveToLeaderEffectTests
                 new NeutralField(200),
                 new GoalField(300)
             }, 2)
-            .WithHorseInRace(new[] { 2 }, out _)
+            .WithHorseInRace(new[] { 1 }, out _)
             .WithHorseInRace(new[] { 1 }, out _)
             .WithGallopCard(card1)
             .Build();
@@ -31,7 +31,7 @@ public class MoveToLeaderEffectTests
         _ = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(2, race.State.HorsesInRace.First().Location);
+        Assert.Equal(1, race.State.HorsesInRace.First().Location);
     }
 
     [Theory]
