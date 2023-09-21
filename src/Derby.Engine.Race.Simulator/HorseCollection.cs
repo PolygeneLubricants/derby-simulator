@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Horses;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Simulator;
 
 public static class HorseCollection
 {

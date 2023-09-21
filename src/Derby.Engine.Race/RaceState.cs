@@ -38,8 +38,10 @@ public class RaceState
         var horsesWhoHasCrashed = _movableHorsesInRace
             .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).Any(resolution => resolution.CountAsLast)).Reverse();
 
+        var eliminatedHorses = RegisteredHorses.Where(horse => horse.Eliminated).ToList();
+
         var unmodifiedScore = horsesWhoHasNotCrashed.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
-        return unmodifiedScore.Concat(horsesWhoHasCrashed).Where(horse => !horse.Eliminated).ToList();
+        return unmodifiedScore.Concat(horsesWhoHasCrashed).Concat(eliminatedHorses).ToList();
     }
 
     public HorseInRace GetLastHorse()

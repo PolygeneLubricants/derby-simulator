@@ -2,18 +2,18 @@
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Turns.Resolutions;
 
-namespace Derby.Engine.Race.Simulator;
+namespace Derby.Engine.Race.Simulator.Loggers;
 
-public class Logger
+public class GameLogLogger
 {
-    public Logger(Race race)
+    public GameLogLogger(Race race)
     {
         race.State.GallopDeck.CardDrawn += OnGallopCardDrawn;
         race.State.ChanceDeck.CardDrawn += OnChanceCardDrawn;
         race.TurnResolver.HorseMoved += OnMove;
         race.TurnStarted += OnTurnStarted;
     }
-    
+
     public void Log(ITurnResolution resolution)
     {
         switch (resolution)
@@ -23,7 +23,7 @@ public class Logger
                 break;
             case EndTurnTurnResolution _:
                 break;
-            case HorseEliminatedTurnResolution _: 
+            case HorseEliminatedTurnResolution _:
                 Console.WriteLine("Horse eliminated from race.");
                 break;
             case HorseWonTurnResolution horseWonResolution:

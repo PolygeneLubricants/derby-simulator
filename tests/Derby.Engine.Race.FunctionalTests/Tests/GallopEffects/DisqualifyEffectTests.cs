@@ -40,7 +40,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects
             var eliminatedTurnResolution = disqualifiedResolution as HorseEliminatedTurnResolution;
             Assert.Equal(eliminatedHorse, eliminatedTurnResolution.EliminatedHorse.OwnedHorse);
 
-            Assert.True(!race.State.GetScore().Any());
+            Assert.True(race.State.GetScore().All(h => h.Eliminated));
         }
 
         [Fact]
