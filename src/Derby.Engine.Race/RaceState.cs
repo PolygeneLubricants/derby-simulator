@@ -51,7 +51,7 @@ public class RaceState
 
     public HorseInRace? GetHorseBehind(HorseInRace horseToFindBehind)
     {
-        var horsesBySlowest = HorsesInRace.OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
+        var horsesBySlowest = HorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
         var indexOfHorseToFindBehind = horsesBySlowest.IndexOf(horseToFindBehind);
         if (indexOfHorseToFindBehind == 0)
         {

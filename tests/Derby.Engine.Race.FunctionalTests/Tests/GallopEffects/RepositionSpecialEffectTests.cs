@@ -23,35 +23,33 @@ public class RepositionSpecialEffectTests
                 .WithLane(new Lane2Years().Fields, 2)
                 .WithLane(new Lane3Years().Fields, 3)
                 .WithLane(new Lane4Years().Fields, 4)
+                .WithHorseInRace(new[] { 1, 2, 2, finalMove }, 4, out var _)
                 .WithHorseInRace(new[] { 6, 1, 1, 1 }, 2, out var _)
                 .WithHorseInRace(new[] { 7, 4, 1, 1 }, 3, out var _)
-                .WithHorseInRace(new[] { 1, 2, 2, finalMove }, 4, out var _)
                 .WithGallopCard(card)
                 .Build();
 
         // Act
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
+        _ = race.ResolveTurn(); // Move to 1
+        _ = race.ResolveTurn(); // Move to 6 pick up Gallop and wait
+        _ = race.ResolveTurn(); // Move to 7
 
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
+        _ = race.ResolveTurn(); // Move to 3
+        _ = race.ResolveTurn(); // Wait
+        _ = race.ResolveTurn(); // Move to 11
 
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
+        _ = race.ResolveTurn(); // Move to 5
+        _ = race.ResolveTurn(); // Wait
+        _ = race.ResolveTurn(); // Move to 12
 
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-        _ = race.ResolveTurn();
-
-        var stoppedAwaiting = race.ResolveTurn();
+        _ = race.ResolveTurn(); // Move to 6(7)
+        _ = race.ResolveTurn(); // Move to 7
+        _ = race.ResolveTurn(); // Move to 13
 
         // Assert
-        Assert.Equal(12, race.State.HorsesInRace[0].Location);
-        Assert.Equal(13, race.State.HorsesInRace[1].Location);
-        Assert.Equal(5 + finalMove, race.State.HorsesInRace[2].Location);
+        Assert.Equal(5 + finalMove, race.State.HorsesInRace[0].Location);
+        Assert.Equal(7, race.State.HorsesInRace[1].Location);
+        Assert.Equal(13, race.State.HorsesInRace[2].Location);
     }
 
     // I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang.
