@@ -4,17 +4,19 @@ namespace Derby.Engine.Race.Cards.Chance;
 
 public class ChanceDeck : BaseDeck<ChanceCard>
 {
-    public ChanceDeck(Action<ChanceCard>? chanceCardDrawn = null) : this(new List<ChanceCard>(), chanceCardDrawn)
+    public ChanceDeck() : this(new List<ChanceCard>())
     {
     }
 
-    public ChanceDeck(IList<ChanceCard> deck, Action<ChanceCard>? chanceCardDrawn = null) : base(deck, chanceCardDrawn)
+    public ChanceDeck(IList<ChanceCard> deck) : base(deck)
     {
     }
 
-    public static ChanceDeck DefaultDeck(Action<ChanceCard>? chanceCardDrawn)
+    public static ChanceDeck DefaultDeck()
     {
-        return new ChanceDeck(Populate(), chanceCardDrawn);
+        var deck = new ChanceDeck(Populate());
+        deck.Shuffle();
+        return deck;
     }
 
     // TODO: Convert to state JSON object to load on init.

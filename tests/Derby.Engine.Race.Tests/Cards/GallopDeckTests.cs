@@ -26,7 +26,7 @@ public class GallopDeckTests
         var initialDeck = new List<GallopCard>(gallopDeck.Deck);
 
         // Act
-        var cardDrawn = gallopDeck.Draw();
+        var cardDrawn = gallopDeck.Draw(null);
 
         // Assert
         Assert.Equal(1, gallopDeck.DiscardPile.Count);
@@ -42,11 +42,11 @@ public class GallopDeckTests
         var initialDeck = new List<GallopCard>(gallopDeck.Deck);
         for (var i = 0; i < initialDeck.Count; i++)
         {
-            _ = gallopDeck.Draw();
+            _ = gallopDeck.Draw(null);
         }
 
         // Act
-        var cardDrawn = gallopDeck.Draw();
+        var cardDrawn = gallopDeck.Draw(null);
         
 
         // Assert

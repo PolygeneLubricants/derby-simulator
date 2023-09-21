@@ -2,11 +2,10 @@
 
 public class BaseDeck<T>
 {
-    private event Action<T>? _cardDrawn;
+    public event Action<HorseInRace, T> CardDrawn = (horse, card) => { };
 
-    public BaseDeck(IList<T> deck, Action<T>? cardDrawn)
+    public BaseDeck(IList<T> deck)
     {
-        _cardDrawn = cardDrawn;
         Deck = deck;
         DiscardPile = new List<T>();
     }
@@ -15,7 +14,7 @@ public class BaseDeck<T>
 
     public IList<T> DiscardPile { get; internal set; }
 
-    public T Draw()
+    public T Draw(HorseInRace drawingHorse)
     {
         if (Deck.Count == 0)
         {
@@ -25,12 +24,7 @@ public class BaseDeck<T>
         var drawnCard = Deck.First();
         Deck.RemoveAt(0);
         DiscardPile.Add(drawnCard);
-
-        if (_cardDrawn != null)
-        {
-            _cardDrawn.Invoke(drawnCard);
-        }
-
+        CardDrawn.Invoke(drawingHorse, drawnCard);
         return drawnCard;
     }
 

@@ -6,6 +6,8 @@ namespace Derby.Engine.Race.Turns;
 
 public class TurnResolver
 {
+    public event Action<HorseInRace, int> HorseMoved = (horse, i) => { };
+    
     public ITurnResolution ResolveTurn(
         HorseInRace horseToPlay,
         RaceState state)
@@ -20,7 +22,7 @@ public class TurnResolver
         // Check move modifiers
         if (horseToPlay.TurnIsHomeStretch(state.CurrentTurn) && !ShouldSkipGallopCard(modifierResolution))
         {
-            var drawnGallopCard = state.GallopDeck.Draw();
+            var drawnGallopCard = state.GallopDeck.Draw(horseToPlay);
             var gallopCardResolution = drawnGallopCard.Resolve(horseToPlay, state);
             if (gallopCardResolution.HorseDisqualified)
             {
@@ -52,6 +54,8 @@ public class TurnResolver
 
         var moves = horseToPlay.OwnedHorse.Horse.GetMoves(state.CurrentTurn, modifierResolution);
         var fieldHorseLandedOn = horseToPlay.Move(moves, MoveType.Natural);
+        HorseMoved.Invoke(horseToPlay, moves);
+
         var turnResolution = ResolveTurn(horseToPlay, state, fieldHorseLandedOn);
 
         return turnResolution;
@@ -90,7 +94,7 @@ public class TurnResolver
         switch (fieldHorseLandedOn)
         {
             case ChanceField _:
-                var drawnChanceCard = state.ChanceDeck.Draw();
+                var drawnChanceCard = state.ChanceDeck.Draw(horseToPlay);
                 var chanceCardResolution = drawnChanceCard.Resolve(horseToPlay, state);
                 if (chanceCardResolution.IsHorseEliminated)
                 {
@@ -104,7 +108,7 @@ public class TurnResolver
                     return new EndTurnTurnResolution();
                 }
 
-                var drawnGallopCard = state.GallopDeck.Draw();
+                var drawnGallopCard = state.GallopDeck.Draw(horseToPlay);
                 var gallopCardResolution = drawnGallopCard.Resolve(horseToPlay, state);
                 if (gallopCardResolution.HorseDisqualified)
                 {

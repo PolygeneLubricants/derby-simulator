@@ -8,23 +8,17 @@ namespace Derby.Engine.Race;
 
 public class Race
 {
-    public event Action<ChanceCard>? ChanceCardDrawn;
-    public event Action<GallopCard>? GallopCardDrawn;
-
+    public event Action<HorseInRace> TurnStarted = (horseInRace => {});
+    
     public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace)
     {
-        Action<ChanceCard> chanceCardDrawn = delegate { };
-        Action<GallopCard> gallopCardDrawn = delegate { };
-
-        var race = new Race(chanceCardDrawn, gallopCardDrawn)
+        var race = new Race()
         {
             State = new RaceState(GameBoard.DefaultBoard(), horsesToRace)
             {
-                GallopDeck = GallopDeck.DefaultDeck(gallopCardDrawn),
-                ChanceDeck = ChanceDeck.DefaultDeck(chanceCardDrawn),
-            },
-            ChanceCardDrawn = chanceCardDrawn,
-            GallopCardDrawn = gallopCardDrawn
+                GallopDeck = GallopDeck.DefaultDeck(),
+                ChanceDeck = ChanceDeck.DefaultDeck(),
+            }
         };
 
         return race;
@@ -32,41 +26,50 @@ public class Race
 
     public Race()
     {
-        ChanceCardDrawn = null;
-        GallopCardDrawn = null;
-        _turnResolver = new TurnResolver();
-    }
-
-    public Race(
-        Action<ChanceCard> chanceCardDrawn, 
-        Action<GallopCard> gallopCardDrawn)
-    {
-        ChanceCardDrawn = chanceCardDrawn;
-        GallopCardDrawn = gallopCardDrawn;
-        _turnResolver = new TurnResolver();
+        TurnResolver = new TurnResolver();
     }
 
     public required RaceState State { get; init; }
 
-    private readonly TurnResolver _turnResolver;
+    public readonly TurnResolver TurnResolver;
     
     public ITurnResolution ResolveTurn()
     {
         var horseToPlay = State.GetNextHorseInRace();
-        if (horseToPlay == null)
+        if (TurnStarted != null && horseToPlay != null)
         {
-            return new DrawTurnResolution();
+            TurnStarted.Invoke(horseToPlay);
         }
 
-        var resolution = _turnResolver.ResolveTurn(horseToPlay, State);
+        ITurnResolution resolution;
+        if (horseToPlay == null)
+        {
+            resolution = new DrawTurnResolution();
+        }
+        else
+        {
+            resolution = TurnResolver.ResolveTurn(horseToPlay, State);
+        }
+        
         CleanupTurn(State, horseToPlay);
+
+        if (resolution is DrawTurnResolution or HorseWonTurnResolution)
+        {
+            GameEnded = true;
+            FinalResolution = resolution;
+        }
+
         return resolution;
     }
 
-    private void CleanupTurn(RaceState state, HorseInRace horseToPlay)
+    public ITurnResolution? FinalResolution { get; private set; }
+
+    public bool GameEnded { get; private set; }
+
+    private void CleanupTurn(RaceState state, HorseInRace? horseToPlay)
     {
         state.IncrementTurnIfApplicable();
         state.IncrementNextInTurnIfApplicable();
-        horseToPlay.CleanupTurn();
+        horseToPlay?.CleanupTurn();
     }
 }
