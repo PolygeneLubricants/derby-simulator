@@ -72,7 +72,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects
 
             // Assert
             Assert.IsType<EndTurnTurnResolution>(disqualifiedResolution);
-            Assert.False(race.State.HorsesInRace.First().Eliminated);
+            Assert.False(race.State.RegisteredHorses.First().Eliminated);
         }
     }
 }

@@ -47,12 +47,12 @@ public class Logger
 
     private void OnChanceCardDrawn(HorseInRace horseInRace, ChanceCard card)
     {
-        Console.WriteLine($"{GetCallerString(horseInRace)} Chance card drawn: {card.Title}: {card.Description}.");
+        Console.WriteLine($"{GetCallerString(horseInRace)} Chance card drawn: {card.Title}: {card.Description}");
     }
 
     private void OnGallopCardDrawn(HorseInRace horseInRace, GallopCard card)
     {
-        Console.WriteLine($"{GetCallerString(horseInRace)} Gallop card drawn: {card.Title}: {card.Description}.");
+        Console.WriteLine($"{GetCallerString(horseInRace)} Gallop card drawn: {card.Title}: {card.Description}");
     }
 
     private void OnMove(HorseInRace horseInRace, int moves)

@@ -20,8 +20,8 @@ public class MoveTests
 
         // Assert
         Assert.IsType<EndTurnTurnResolution>(resolution);
-        Assert.Equal(1, race.State.HorsesInRace.First().Location);
-        Assert.Equal(1, race.State.HorsesInRace.First().FieldsFromGoal);
+        Assert.Equal(1, race.State.RegisteredHorses.First().Location);
+        Assert.Equal(1, race.State.RegisteredHorses.First().FieldsFromGoal);
         Assert.Equal(1, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
     }
@@ -42,14 +42,14 @@ public class MoveTests
 
         // Assert
         Assert.IsType<HorseWonTurnResolution>(resolutionTurn2);
-        Assert.Equal(2, race.State.HorsesInRace.First().Location);
-        Assert.Equal(0, race.State.HorsesInRace.First().FieldsFromGoal);
+        Assert.Equal(2, race.State.RegisteredHorses.First().Location);
+        Assert.Equal(0, race.State.RegisteredHorses.First().FieldsFromGoal);
         Assert.Equal(2, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
 
         var horseWonTurnResolution = resolutionTurn2 as HorseWonTurnResolution;
         Assert.Equal(1, horseWonTurnResolution.Score.Count);
-        Assert.Equal(race.State.HorsesInRace.First(), horseWonTurnResolution.Score.First());
+        Assert.Equal(race.State.RegisteredHorses.First(), horseWonTurnResolution.Score.First());
     }
 
     [Fact]
@@ -67,14 +67,14 @@ public class MoveTests
 
         // Assert
         Assert.IsType<HorseWonTurnResolution>(resolution);
-        Assert.Equal(2, race.State.HorsesInRace.First().Location);
-        Assert.Equal(0, race.State.HorsesInRace.First().FieldsFromGoal);
+        Assert.Equal(2, race.State.RegisteredHorses.First().Location);
+        Assert.Equal(0, race.State.RegisteredHorses.First().FieldsFromGoal);
         Assert.Equal(1, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
 
         var horseWonTurnResolution = resolution as HorseWonTurnResolution;
         Assert.Equal(1, horseWonTurnResolution.Score.Count);
-        Assert.Equal(race.State.HorsesInRace.First(), horseWonTurnResolution.Score.First());
+        Assert.Equal(race.State.RegisteredHorses.First(), horseWonTurnResolution.Score.First());
     }
 
     [Fact]
@@ -92,21 +92,21 @@ public class MoveTests
             .Build();
 
         // Act
-        var resolutions = Enumerable.Range(0, race.State.HorsesInRace.Count).Select(_ => race.ResolveTurn()).ToList();
+        var resolutions = Enumerable.Range(0, race.State.RegisteredHorses.Count).Select(_ => race.ResolveTurn()).ToList();
 
         // Assert
         Assert.All(resolutions, resolution => Assert.IsType<EndTurnTurnResolution>(resolution));
 
-        Assert.Equal(1, race.State.HorsesInRace[0].Location);
-        Assert.Equal(8, race.State.HorsesInRace[0].FieldsFromGoal);
-        Assert.Equal(2, race.State.HorsesInRace[1].Location);
-        Assert.Equal(7, race.State.HorsesInRace[1].FieldsFromGoal);
-        Assert.Equal(3, race.State.HorsesInRace[2].Location);
-        Assert.Equal(6, race.State.HorsesInRace[2].FieldsFromGoal);
-        Assert.Equal(4, race.State.HorsesInRace[3].Location);
-        Assert.Equal(5, race.State.HorsesInRace[3].FieldsFromGoal);
-        Assert.Equal(5, race.State.HorsesInRace[4].Location);
-        Assert.Equal(4, race.State.HorsesInRace[4].FieldsFromGoal);
+        Assert.Equal(1, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(8, race.State.RegisteredHorses[0].FieldsFromGoal);
+        Assert.Equal(2, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(7, race.State.RegisteredHorses[1].FieldsFromGoal);
+        Assert.Equal(3, race.State.RegisteredHorses[2].Location);
+        Assert.Equal(6, race.State.RegisteredHorses[2].FieldsFromGoal);
+        Assert.Equal(4, race.State.RegisteredHorses[3].Location);
+        Assert.Equal(5, race.State.RegisteredHorses[3].FieldsFromGoal);
+        Assert.Equal(5, race.State.RegisteredHorses[4].Location);
+        Assert.Equal(4, race.State.RegisteredHorses[4].FieldsFromGoal);
 
         Assert.Equal(1, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
@@ -141,11 +141,11 @@ public class MoveTests
         Assert.IsType<HorseWonTurnResolution>(resolution);
         var horseWonResolution = resolution as HorseWonTurnResolution;
         Assert.Equal(winnerHorse, horseWonResolution.Score.First().OwnedHorse);
-        Assert.Equal(2, race.State.HorsesInRace[0].Location);
-        Assert.Equal(4, race.State.HorsesInRace[1].Location);
-        Assert.Equal(6, race.State.HorsesInRace[2].Location);
-        Assert.Equal(9, race.State.HorsesInRace[3].Location);
-        Assert.Equal(4, race.State.HorsesInRace[4].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(4, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(6, race.State.RegisteredHorses[2].Location);
+        Assert.Equal(9, race.State.RegisteredHorses[3].Location);
+        Assert.Equal(4, race.State.RegisteredHorses[4].Location);
 
         Assert.Equal(1, race.State.CurrentTurn);
         Assert.Equal(4, race.State.NextHorseInTurn);
@@ -177,8 +177,8 @@ public class MoveTests
         Assert.IsType<HorseWonTurnResolution>(resolution);
         var horseWonResolution = resolution as HorseWonTurnResolution;
         Assert.Equal(winnerHorse, horseWonResolution.Score.First().OwnedHorse);
-        Assert.Equal(9, race.State.HorsesInRace[0].Location);
-        Assert.Equal(8, race.State.HorsesInRace[1].Location);
+        Assert.Equal(9, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(8, race.State.RegisteredHorses[1].Location);
 
         Assert.Equal(8, race.State.CurrentTurn);
         Assert.Equal(1, race.State.NextHorseInTurn);
@@ -211,9 +211,9 @@ public class MoveTests
         Assert.IsType<HorseWonTurnResolution>(resolution);
         var horseWonResolution = resolution as HorseWonTurnResolution;
         Assert.Equal(winnerHorse, horseWonResolution.Score.First().OwnedHorse);
-        Assert.Equal(32, race.State.HorsesInRace[0].Location);
-        Assert.Equal(28, race.State.HorsesInRace[1].Location);
-        Assert.Equal(31, race.State.HorsesInRace[2].Location);
+        Assert.Equal(32, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(28, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(31, race.State.RegisteredHorses[2].Location);
 
         Assert.Equal(11, race.State.CurrentTurn);
         Assert.Equal(1, race.State.NextHorseInTurn);
@@ -239,8 +239,8 @@ public class MoveTests
 
         // Assert
         Assert.Equal(lastHorse, race.State.GetLastHorse().OwnedHorse);
-        Assert.Equal(12, race.State.HorsesInRace[0].Location);
-        Assert.Equal(13, race.State.HorsesInRace[1].Location);
+        Assert.Equal(12, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(13, race.State.RegisteredHorses[1].Location);
     }
 
     [Fact]
@@ -263,8 +263,8 @@ public class MoveTests
 
         // Assert
         Assert.Equal(leader, race.State.GetLeaderHorse().OwnedHorse);
-        Assert.Equal(13, race.State.HorsesInRace[0].Location);
-        Assert.Equal(15, race.State.HorsesInRace[1].Location);
+        Assert.Equal(13, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(15, race.State.RegisteredHorses[1].Location);
     }
 
     [Fact]
@@ -355,7 +355,7 @@ public class MoveTests
 
         // Assert
         Assert.Equal(leader, race.State.GetLeaderHorse().OwnedHorse);
-        Assert.Equal(12, race.State.HorsesInRace[0].Location);
-        Assert.Equal(12, race.State.HorsesInRace[1].Location);
+        Assert.Equal(12, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(12, race.State.RegisteredHorses[1].Location);
     }
 }

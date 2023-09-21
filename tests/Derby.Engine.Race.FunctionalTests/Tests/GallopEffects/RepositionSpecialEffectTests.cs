@@ -47,9 +47,9 @@ public class RepositionSpecialEffectTests
         _ = race.ResolveTurn(); // Move to 13
 
         // Assert
-        Assert.Equal(5 + finalMove, race.State.HorsesInRace[0].Location);
-        Assert.Equal(7, race.State.HorsesInRace[1].Location);
-        Assert.Equal(13, race.State.HorsesInRace[2].Location);
+        Assert.Equal(5 + finalMove, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(7, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(13, race.State.RegisteredHorses[2].Location);
     }
 
     // I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang.
@@ -89,9 +89,9 @@ public class RepositionSpecialEffectTests
         _ = race.ResolveTurn(); // 3 moves again
 
         // Assert
-        Assert.Equal(28, race.State.HorsesInRace[0].Location);
-        Assert.Equal(33, race.State.HorsesInRace[1].Location);
-        Assert.Equal(38, race.State.HorsesInRace[2].Location);
+        Assert.Equal(28, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(33, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(38, race.State.RegisteredHorses[2].Location);
     }
 
     // I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang.
@@ -123,8 +123,8 @@ public class RepositionSpecialEffectTests
         var skipsTurn = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(27, race.State.HorsesInRace[0].Location);
-        Assert.Equal(32, race.State.HorsesInRace[1].Location);
-        Assert.Equal(40, race.State.HorsesInRace[2].Location);
+        Assert.Equal(27, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(32, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(40, race.State.RegisteredHorses[2].Location);
     }
 }

@@ -42,9 +42,9 @@ public class CrashSpecialEffectTests
         var crashedHorseMoves = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(4, race.State.HorsesInRace[0].Location);
-        Assert.Equal(4, race.State.HorsesInRace[1].Location);
-        Assert.Equal(2, race.State.HorsesInRace[2].Location);
+        Assert.Equal(4, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(4, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[2].Location);
         Assert.Equal(2, race.State.CurrentTurn);
         Assert.Equal(1, race.State.NextHorseInTurn);
     }
@@ -111,10 +111,10 @@ public class CrashSpecialEffectTests
         var behind2 = race.ResolveTurn(); // 7
 
         // Assert
-        Assert.Equal(21, race.State.HorsesInRace[0].Location);
-        Assert.Equal(12, race.State.HorsesInRace[1].Location);
-        Assert.Equal(7, race.State.HorsesInRace[2].Location);
-        Assert.Equal(7, race.State.HorsesInRace[3].Location);
+        Assert.Equal(21, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(12, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(7, race.State.RegisteredHorses[2].Location);
+        Assert.Equal(7, race.State.RegisteredHorses[3].Location);
         Assert.Equal(7, race.State.CurrentTurn);
         Assert.Equal(0, race.State.NextHorseInTurn);
     }

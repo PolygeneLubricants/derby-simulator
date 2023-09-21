@@ -36,7 +36,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             _ = race.ResolveTurn(); // Move 3
 
             // Assert
-            Assert.Equal(31, race.State.HorsesInRace[0].Location);
+            Assert.Equal(31, race.State.RegisteredHorses[0].Location);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             _ = race.ResolveTurn(); // Move 3
 
             // Assert
-            Assert.Equal(11, race.State.HorsesInRace[0].Location);
+            Assert.Equal(11, race.State.RegisteredHorses[0].Location);
         }
     }
 }

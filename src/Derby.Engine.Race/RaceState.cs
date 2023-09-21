@@ -11,7 +11,8 @@ public class RaceState
     public RaceState(GameBoard gameBoard, IEnumerable<OwnedHorse> horsesToRace)
     {
         Board = gameBoard;
-        HorsesInRace = Register(horsesToRace).ToList();
+        RegisteredHorses = Register(horsesToRace).ToList();
+        _movableHorsesInRace = RegisteredHorses;
         NextHorseInTurn = 0;
         CurrentTurn = 0;
     }
@@ -22,17 +23,19 @@ public class RaceState
 
     public required GallopDeck GallopDeck { get; init; }
 
-    public IList<HorseInRace> HorsesInRace { get; }
+    public IList<HorseInRace> RegisteredHorses { get; }
+
+    private IList<HorseInRace> _movableHorsesInRace;
 
     public int NextHorseInTurn { get; private set; }
     public int CurrentTurn { get; private set; }
 
     public IList<HorseInRace> GetScore()
     {
-        var horsesWhoHasNotCrashed = HorsesInRace
+        var horsesWhoHasNotCrashed = _movableHorsesInRace
             .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).All(resolution => !resolution.CountAsLast));
 
-        var horsesWhoHasCrashed = HorsesInRace
+        var horsesWhoHasCrashed = _movableHorsesInRace
             .Where(horse => horse.Modifiers.Select(modifier => modifier.Apply(horse, this)).Any(resolution => resolution.CountAsLast)).Reverse();
 
         var unmodifiedScore = horsesWhoHasNotCrashed.OrderByDescending(horse => horse.GetLaneTiebreaker()).ToList();
@@ -41,17 +44,17 @@ public class RaceState
 
     public HorseInRace GetLastHorse()
     {
-        return HorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).First();
+        return _movableHorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).First();
     }
 
     public HorseInRace GetLeaderHorse()
     {
-        return HorsesInRace.OrderByDescending(horse => horse.GetLaneTiebreaker()).First();
+        return _movableHorsesInRace.OrderByDescending(horse => horse.GetLaneTiebreaker()).First();
     }
 
     public HorseInRace? GetHorseBehind(HorseInRace horseToFindBehind)
     {
-        var horsesBySlowest = HorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
+        var horsesBySlowest          = _movableHorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
         var indexOfHorseToFindBehind = horsesBySlowest.IndexOf(horseToFindBehind);
         if (indexOfHorseToFindBehind == 0)
         {
@@ -65,13 +68,12 @@ public class RaceState
 
     public HorseInRace? GetNextHorseInRace()
     {
-        var horsesStillInRace = GetMovableHorsesInRace().ToList();
-        if (!horsesStillInRace.Any())
+        if (!_movableHorsesInRace.Any())
         {
             return null;
         }
 
-        return horsesStillInRace[NextHorseInTurn];
+        return _movableHorsesInRace[NextHorseInTurn];
     }
 
     public void IncrementTurnIfApplicable()
@@ -84,26 +86,27 @@ public class RaceState
 
     public void IncrementNextInTurnIfApplicable()
     {
-        var movableHorsesInRace = GetMovableHorsesInRace().Count();
-        if (movableHorsesInRace == 0)
+        var previousCount = _movableHorsesInRace.Count;
+        _movableHorsesInRace = _movableHorsesInRace.Where(horse => !horse.Eliminated).ToList();
+        if (_movableHorsesInRace.Count == 0)
         {
             NextHorseInTurn = 0;
+        }
+        else if (previousCount > _movableHorsesInRace.Count && NextHorseInTurn != previousCount - 1)
+        {
+            // Horse has been eliminated, and counter should not be incremented
+            // unless it is last.
         }
         else
         {
             NextHorseInTurn++;
-            NextHorseInTurn %= movableHorsesInRace;
+            NextHorseInTurn %= _movableHorsesInRace.Count;
         }
     }
 
     private bool ShouldIncrementTurn()
     {
-        return NextHorseInTurn >= GetMovableHorsesInRace().Count() - 1;
-    }
-
-    private IEnumerable<HorseInRace> GetMovableHorsesInRace()
-    {
-        return HorsesInRace.Where(h => !h.Eliminated);
+        return NextHorseInTurn >= _movableHorsesInRace.Count - 1;
     }
 
     private IEnumerable<HorseInRace> Register(IEnumerable<OwnedHorse> horsesToRace)

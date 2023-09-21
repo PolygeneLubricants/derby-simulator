@@ -23,22 +23,26 @@ public class EliminateHorseEffectTests
             }, 2)
             .WithHorseInRace(new[] { 1 }, out var eliminatedHorse)
             .WithHorseInRace(new[] { 2 }, out _)
+            .WithHorseInRace(new[] { 3 }, out _)
             .WithChanceCard(card)
+            .WithNoEffectGallopCard()
             .Build();
 
         // Act
         var eliminationResolution = race.ResolveTurn();
+        _ = race.ResolveTurn();
         _ = race.ResolveTurn();
 
         // Assert
         Assert.IsType<HorseEliminatedTurnResolution>(eliminationResolution);
         var eliminatedTurnResolution = eliminationResolution as HorseEliminatedTurnResolution;
         Assert.Equal(eliminatedHorse, eliminatedTurnResolution.EliminatedHorse.OwnedHorse);
-        Assert.Equal(2, race.State.HorsesInRace[1].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(3, race.State.RegisteredHorses[2].Location);
     }
 
     [Fact]
-    public void EliminateHorseEffect_WhenCardDrawnAndRaceHaOneHorse_HorseEliminatedAndGameDraw()
+    public void EliminateHorseEffect_WhenCardDrawnAndRaceHasOneHorse_HorseEliminatedAndGameDraw()
     {
         // Arrange
         var card = new ChanceCard { Title = "", Description = "", CardEffect = new EliminateHorseEffect() };

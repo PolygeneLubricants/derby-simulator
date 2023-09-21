@@ -30,7 +30,7 @@ public class MoveEffectTests
         _ = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(2, race.State.HorsesInRace.First().Location);
+        Assert.Equal(2, race.State.RegisteredHorses.First().Location);
     }
 
     [Fact]
@@ -84,6 +84,6 @@ public class MoveEffectTests
 
         // Assert
         Assert.Equal(1, drawnTimes);
-        Assert.Equal(2, race.State.HorsesInRace[0].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[0].Location);
     }
 }

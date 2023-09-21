@@ -1,4 +1,7 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Board.Lanes.Fields;
+using Derby.Engine.Race.Cards.Chance;
+using Derby.Engine.Race.Cards.Chance.Effects;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
@@ -52,9 +55,9 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             _ = race.ResolveTurn(); // Move to 7
 
             // Assert
-            Assert.Equal(13, race.State.HorsesInRace[0].Location);
-            Assert.Equal(14, race.State.HorsesInRace[1].Location);
-            Assert.Equal(7, race.State.HorsesInRace[2].Location);
+            Assert.Equal(13, race.State.RegisteredHorses[0].Location);
+            Assert.Equal(14, race.State.RegisteredHorses[1].Location);
+            Assert.Equal(7, race.State.RegisteredHorses[2].Location);
         }
 
         [Fact]
@@ -91,9 +94,9 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             _ = race.ResolveTurn(); // Move to 4
 
             // Assert
-            Assert.Equal(7, race.State.HorsesInRace[0].Location);
-            Assert.Equal(11, race.State.HorsesInRace[1].Location);
-            Assert.Equal(4, race.State.HorsesInRace[2].Location);
+            Assert.Equal(7, race.State.RegisteredHorses[0].Location);
+            Assert.Equal(11, race.State.RegisteredHorses[1].Location);
+            Assert.Equal(4, race.State.RegisteredHorses[2].Location);
         }
 
         [Fact]
@@ -140,9 +143,60 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             _ = race.ResolveTurn(); // Move to 7
 
             // Assert
-            Assert.Equal(9, race.State.HorsesInRace[0].Location);
-            Assert.Equal(7, race.State.HorsesInRace[1].Location);
-            Assert.Equal(7, race.State.HorsesInRace[2].Location);
+            Assert.Equal(9, race.State.RegisteredHorses[0].Location);
+            Assert.Equal(7, race.State.RegisteredHorses[1].Location);
+            Assert.Equal(7, race.State.RegisteredHorses[2].Location);
+        }
+
+        [Fact]
+        public void AwaitModifier_AwaitWhenAwaitedHorseIsEliminated_AwaitEffectRemoved()
+        {
+            // Arrange
+            var card = new GallopCard
+            {
+                Title = "",
+                Description = "",
+                CardEffect = new ModifierEffect(() => new AwaitModifier(AwaitType.Last))
+            };
+
+            var eliminate = new ChanceCard()
+            {
+                Title = "",
+                Description = "",
+                CardEffect = new EliminateHorseEffect()
+            };
+
+            var builder = new RaceTestBuilder();
+            var race =
+                builder
+                    .WithLane(new List<IField>
+                    {
+                        new StartField(0), 
+                        new ChanceField(100), 
+                        new NeutralField(200),
+                        new GallopField(300),
+                        new NeutralField(400),
+                        new GoalField(500)
+                    }, 2)
+                    .WithHorseInRace(new[] { 2, 2 }, 2, out _)
+                    .WithHorseInRace(new[] { 3, 1 }, 2, out _)
+                    .WithHorseInRace(new[] { 1, 1 }, 2, out _)
+                    .WithGallopCard(card)
+                    .WithChanceCard(eliminate)
+                    .Build();
+
+            // Act
+            _ = race.ResolveTurn(); // Move 2
+            _ = race.ResolveTurn(); // Move 3, pick up await
+            _ = race.ResolveTurn(); // Move 1 gets eliminated
+
+            _ = race.ResolveTurn(); // Move 0
+            _ = race.ResolveTurn(); // Move 1 as awaited horse is eliminated
+
+            // Assert
+            Assert.Equal(4, race.State.RegisteredHorses[0].Location);
+            Assert.Equal(4, race.State.RegisteredHorses[1].Location);
+            Assert.True(race.State.RegisteredHorses[2].Eliminated);
         }
     }
 }

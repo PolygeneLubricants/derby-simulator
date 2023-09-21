@@ -56,7 +56,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             // Assert
             Assert.Equal(1, gallopCardDrawTimes);
             Assert.Equal(1, chanceCardDrawTimes);
-            Assert.Equal(22, race.State.HorsesInRace[0].Location);
+            Assert.Equal(22, race.State.RegisteredHorses[0].Location);
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
 
             // Assert
             Assert.Equal(2, gallopCardDrawTimes);
-            Assert.Equal(28, race.State.HorsesInRace[0].Location);
+            Assert.Equal(28, race.State.RegisteredHorses[0].Location);
         }
     }
 }

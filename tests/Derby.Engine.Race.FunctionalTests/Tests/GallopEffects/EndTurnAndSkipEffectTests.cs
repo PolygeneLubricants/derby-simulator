@@ -33,8 +33,8 @@ public class EndTurnAndSkipEffectTests
         _ = race.ResolveTurn(); // horse 2 wins
 
         // Assert
-        Assert.Equal(1, race.State.HorsesInRace[0].Location);
-        Assert.Equal(3, race.State.HorsesInRace[1].Location);
+        Assert.Equal(1, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(3, race.State.RegisteredHorses[1].Location);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class EndTurnAndSkipEffectTests
         _ = race.ResolveTurn(); // 1 skip over, moves
 
         // Assert
-        Assert.Equal(2, race.State.HorsesInRace[0].Location);
-        Assert.Equal(2, race.State.HorsesInRace[1].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(2, race.State.RegisteredHorses[1].Location);
     }
 }

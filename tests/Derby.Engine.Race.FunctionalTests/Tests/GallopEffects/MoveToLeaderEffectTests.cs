@@ -31,7 +31,7 @@ public class MoveToLeaderEffectTests
         _ = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(1, race.State.HorsesInRace.First().Location);
+        Assert.Equal(1, race.State.RegisteredHorses.First().Location);
     }
 
     [Theory]
@@ -67,7 +67,7 @@ public class MoveToLeaderEffectTests
 
         // Assert
         Assert.IsType(resolutionType, finalResolution);
-        Assert.Equal(expectedFinalLocation, race.State.HorsesInRace[2].Location);
+        Assert.Equal(expectedFinalLocation, race.State.RegisteredHorses[2].Location);
     }
 
     [Theory]
@@ -104,7 +104,7 @@ public class MoveToLeaderEffectTests
         _ = race.ResolveTurn();
 
         // Assert
-        Assert.Equal(expectedLocationAfterMove, race.State.HorsesInRace[3].Location);
+        Assert.Equal(expectedLocationAfterMove, race.State.RegisteredHorses[3].Location);
     }
 
     public static IEnumerable<object[]> MoveToLeaderData =>

@@ -24,6 +24,15 @@ public class AwaitModifier : IModifier
 
     public ModifierResolution Apply(HorseInRace horseWithModifier, RaceState state)
     {
+        // Handle edge-case, when horse is awaiting a horse which has then been eliminated.
+        // In this case, the horse is soft-locked if not handled like this.
+        // Note, the rules do not specify this situation, as an alternate interpretation could be,
+        // to pick the _next_ horse that fits the card criteria.
+        if (_horseToAwait is { Eliminated: true })
+        {
+            return new ModifierResolution { IsApplicable = false };
+        }
+
         if (_awaitType == AwaitType.All)
         {
             if (state.GetLastHorse().GetLaneTiebreaker() >= horseWithModifier.GetLaneTiebreaker())
