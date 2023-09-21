@@ -117,7 +117,8 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
                     .WithHorseInRace(new[] { 1, 3, 2, 1 }, 2, out _)
                     .WithNoEffectGallopCard()
                     .WithGallopCard(card)
-                    .WithNoEffectChanceCard()
+                    .WithNoEffectGallopCard()
+                    .WithNoEffectGallopCard()
                     .WithNoEffectChanceCard()
                     .Build();
 
