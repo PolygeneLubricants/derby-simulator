@@ -8,15 +8,23 @@ namespace Derby.Engine.Race;
 
 public class Race
 {
+    public event Action<ChanceCard>? ChanceCardDrawn;
+    public event Action<GallopCard>? GallopCardDrawn;
+
     public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace)
     {
-        var race = new Race()
+        Action<ChanceCard> chanceCardDrawn = delegate { };
+        Action<GallopCard> gallopCardDrawn = delegate { };
+
+        var race = new Race(chanceCardDrawn, gallopCardDrawn)
         {
             State = new RaceState(GameBoard.DefaultBoard(), horsesToRace)
             {
-                GallopDeck = GallopDeck.DefaultDeck(),
-                ChanceDeck = ChanceDeck.DefaultDeck()
-            }
+                GallopDeck = GallopDeck.DefaultDeck(gallopCardDrawn),
+                ChanceDeck = ChanceDeck.DefaultDeck(chanceCardDrawn),
+            },
+            ChanceCardDrawn = chanceCardDrawn,
+            GallopCardDrawn = gallopCardDrawn
         };
 
         return race;
@@ -24,13 +32,24 @@ public class Race
 
     public Race()
     {
+        ChanceCardDrawn = null;
+        GallopCardDrawn = null;
+        _turnResolver = new TurnResolver();
+    }
+
+    public Race(
+        Action<ChanceCard> chanceCardDrawn, 
+        Action<GallopCard> gallopCardDrawn)
+    {
+        ChanceCardDrawn = chanceCardDrawn;
+        GallopCardDrawn = gallopCardDrawn;
         _turnResolver = new TurnResolver();
     }
 
     public required RaceState State { get; init; }
 
     private readonly TurnResolver _turnResolver;
-
+    
     public ITurnResolution ResolveTurn()
     {
         var horseToPlay = State.GetNextHorseInRace();

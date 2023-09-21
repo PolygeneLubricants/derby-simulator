@@ -5,17 +5,17 @@ namespace Derby.Engine.Race.Cards.Gallop;
 
 public class GallopDeck : BaseDeck<GallopCard>
 {
-    public GallopDeck() : base(new List<GallopCard>())
+    public GallopDeck(Action<GallopCard>? gallopCardDrawn = null) : this(new List<GallopCard>(), gallopCardDrawn)
     {
     }
 
-    public GallopDeck(IList<GallopCard> deck) : base(deck)
+    public GallopDeck(IList<GallopCard> deck, Action<GallopCard>? gallopCardDrawn = null) : base(deck, gallopCardDrawn)
     {
     }
 
-    public static GallopDeck DefaultDeck()
+    public static GallopDeck DefaultDeck(Action<GallopCard>? gallopCardDrawn = null)
     {
-        return new GallopDeck(Populate());
+        return new GallopDeck(Populate(), gallopCardDrawn);
     }
 
     // TODO: Convert to state JSON object to load on init.

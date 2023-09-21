@@ -2,8 +2,11 @@
 
 public class BaseDeck<T>
 {
-    public BaseDeck(IList<T> deck)
+    private event Action<T>? _cardDrawn;
+
+    public BaseDeck(IList<T> deck, Action<T>? cardDrawn)
     {
+        _cardDrawn = cardDrawn;
         Deck = deck;
         DiscardPile = new List<T>();
     }
@@ -22,6 +25,12 @@ public class BaseDeck<T>
         var drawnCard = Deck.First();
         Deck.RemoveAt(0);
         DiscardPile.Add(drawnCard);
+
+        if (_cardDrawn != null)
+        {
+            _cardDrawn.Invoke(drawnCard);
+        }
+
         return drawnCard;
     }
 
