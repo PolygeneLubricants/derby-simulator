@@ -12,8 +12,8 @@ namespace Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
 public class RaceTestBuilder
 {
     private readonly GameBoard _board;
-    private readonly ChanceDeck _chanceDeck;
-    private readonly GallopDeck _gallopDeck;
+    private ChanceDeck _chanceDeck;
+    private GallopDeck _gallopDeck;
     private readonly IList<OwnedHorse> _horsesInRace;
     private readonly IList<StableCode> _availableStables;
 
@@ -70,6 +70,16 @@ public class RaceTestBuilder
 
         _horsesInRace.Add(ownedHorse);
         horseAdded = ownedHorse;
+
+        return this;
+    }
+
+    public RaceTestBuilder WithHorseInRace(IEnumerable<OwnedHorse> horsesInRace)
+    {
+        foreach (var horse in horsesInRace)
+        {
+            _horsesInRace.Add(horse);
+        }
 
         return this;
     }
@@ -145,6 +155,18 @@ public class RaceTestBuilder
     public RaceTestBuilder WithChanceCard(ChanceCard chanceCard)
     {
         _chanceDeck.Deck.Add(chanceCard);
+        return this;
+    }
+
+    public RaceTestBuilder WithGallopDeck(GallopDeck gallopDeckInRace)
+    {
+        _gallopDeck = gallopDeckInRace;
+        return this;
+    }
+
+    public RaceTestBuilder WithChanceDeck(ChanceDeck chanceDeckInRace)
+    {
+        _chanceDeck = chanceDeckInRace;
         return this;
     }
 }

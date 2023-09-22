@@ -1,6 +1,6 @@
 ﻿using Derby.Engine.Race.Horses;
 
-namespace Derby.Engine.Race.Simulator;
+namespace Derby.Engine.Race;
 
 public static class HorseCollection
 {
