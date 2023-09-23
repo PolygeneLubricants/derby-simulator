@@ -123,7 +123,7 @@ namespace Derby.Engine.Race.Cards.Gallop
                     Title = "Jævn fart",
                     Description =
                         "Flyt fra og med næste gang fire felter i hver omgang uden at tage galopkort. I opløbet, Flyt højst fire felter. Kortet opbevares under hele løbet.",
-                    CardEffect = new HomeStretchCompositeEffect(new MoveEffect(4),
+                    CardEffect = new HomeStretchCompositeEffect(new ModifierEffect(() => new MaxMoveModifier(4)),
                         new ModifierEffect(() => new SteadyPaceModifier(4)))
                 }
             };

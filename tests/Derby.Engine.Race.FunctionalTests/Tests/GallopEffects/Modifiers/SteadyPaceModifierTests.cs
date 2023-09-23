@@ -17,7 +17,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
                 Title = "",
                 Description = "",
                 CardEffect = new HomeStretchCompositeEffect(
-                    new MoveEffect(4),
+                    new ModifierEffect(() => new MaxMoveModifier(4)),
                     new ModifierEffect(() => new SteadyPaceModifier(4)))
             };
 
@@ -68,7 +68,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
                 Title = "",
                 Description = "",
                 CardEffect = new HomeStretchCompositeEffect(
-                    new MoveEffect(1),
+                    new ModifierEffect(() => new MaxMoveModifier(1)),
                     new ModifierEffect(() => new SteadyPaceModifier(1)))
             };
 

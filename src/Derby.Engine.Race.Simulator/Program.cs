@@ -3,4 +3,4 @@
 var simulation = new Simulation();
 // simulation.RunCombinations(CombinationRule.All);
 
-simulation.Run(new List<string> { "Isolde", "Rusch", "Whispering", "Sweet Sue", "Aldebaran" });
+simulation.RunRandom(2);

@@ -38,11 +38,6 @@ public class TurnResolver
             {
                 return new EndTurnTurnResolution();
             }
-
-            if (gallopCardResolution.IsMoveResolution)
-            {
-                return new EndTurnTurnResolution();
-            }
         }
 
         // Re-check modifiers based on home-stretch.

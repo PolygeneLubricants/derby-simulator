@@ -60,7 +60,7 @@ public class MoveEffectTests
     }
 
     [Fact]
-    public void MoveEffect_WhenCardDrawnInHomeStretch_OnlyMovesOnEffectNotNatural()
+    public void MoveEffect_WhenCardDrawnInHomeStretch_MovesEffectPlusModifier()
     {
         // Arrange
         var card1 = new ObservableGallopCard { Title = "", Description = "", CardEffect = new MoveEffect(1) };
@@ -79,11 +79,10 @@ public class MoveEffectTests
         // Act
         var drawnTimes = 0;
         card1.OnDraw += () => { drawnTimes++; };
-        _ = race.ResolveTurn(); // Home stretch, draw move card, move 1
-        _ = race.ResolveTurn(); // Move 1
+        _ = race.ResolveTurn(); // Home stretch, draw move card, move 3 + 1
 
         // Assert
         Assert.Equal(1, drawnTimes);
-        Assert.Equal(2, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(3, race.State.RegisteredHorses[0].Location);
     }
 }

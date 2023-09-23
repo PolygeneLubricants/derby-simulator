@@ -6,6 +6,28 @@ namespace Derby.Engine.Race.Simulator;
 
 public class Simulation
 {
+    public void RunRandom(int horseCount)
+    {
+        if (horseCount is <= 0 or > 10)
+        {
+            throw new ArgumentException(horseCount.ToString());
+        }
+
+        var horsesInRace = HorseCollection.Horses.Values.OrderBy(_ => Guid.NewGuid()).Take(horseCount).Select(h => h.Name).ToList();
+        var horsesToRace = MapHorse(horsesInRace);
+
+        var race   = Race.GetDefault(horsesToRace);
+        var logger = new GameLogLogger(race);
+
+        var turnLimit = 100_000;
+
+        while (!race.GameEnded && turnLimit > race.State.CurrentTurn)
+        {
+            var resolution = race.ResolveTurn();
+            logger.Log(resolution);
+        }
+    }
+
     public void Run(
         IList<string> horsesInRace)
     {
