@@ -106,7 +106,7 @@ public class Simulation
         var stables = Enum.GetValues<StableCode>().ToList();
         for (var i = 0; i < horses.Count; i++)
         {
-            yield return MapHorse(horses[i], stables[i % horses.Count]);
+            yield return MapHorse(horses[i], stables[i % stables.Count]);
         }
     }
 

@@ -3,4 +3,4 @@
 var simulation = new Simulation();
 // simulation.RunCombinations(CombinationRule.All);
 
-simulation.RunRandom(2);
+simulation.RunRandom(10);

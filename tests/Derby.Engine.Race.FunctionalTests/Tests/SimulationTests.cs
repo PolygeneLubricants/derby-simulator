@@ -61,6 +61,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests
         {
             return new List<object[]>
             {
+                // 5 Horses, Sweet Sue wins.
                 new object[]
                 {
                     new List<string> { "Isolde", "Rusch", "Whispering", "Sweet Sue", "Aldebaran" },
@@ -92,7 +93,102 @@ namespace Derby.Engine.Race.FunctionalTests.Tests
                         DefaultChanceDeck.GetCard("Tag et lån"),
                     }),
                     new List<(int, bool)> { (3, false), (8, false), (6, false), (0, false), (10, false) }
-                }
+                },
+                // 2 horses, Castor wins
+                new object[]
+                {
+                    new List<string> { "Castor", "Whispering" },
+                    new GallopDeck(new List<GallopCard>
+                    {
+                        DefaultGallopDeck.GetCard("Stærk fremrykning"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Hesten falder tilbage"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                    }),
+                    new ChanceDeck(new List<ChanceCard>
+                    {
+                        DefaultChanceDeck.GetCard("Ekstra afgifter til Grand Prix og Derby"),
+                        DefaultChanceDeck.GetCard("Fint regnskab")
+                    }),
+                    new List<(int, bool)> { (0, false), (9, false) }
+                },
+                // 3 horses, Vitesse wins, exciting ending
+                new object[]
+                {
+                    new List<string> { "Vitesse", "Aldebaran", "Orkan" },
+                    new GallopDeck(new List<GallopCard>
+                    {
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Protest"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Pres ikke hesten for hårdt"),
+                        DefaultGallopDeck.GetCard("Hesten falder tilbage"),
+                        DefaultGallopDeck.GetCard("Hesten går udemærket"),
+                    }),
+                    new ChanceDeck(new List<ChanceCard>
+                    {
+                        DefaultChanceDeck.GetCard("Trænerafgifter"),
+                        DefaultChanceDeck.GetCard("Ekstra afgifter til Grand Prix og Derby"),
+                        DefaultChanceDeck.GetCard("Ombygning af banen billigere end beregnet"),
+                        DefaultChanceDeck.GetCard("Banen skal bygges om"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                    }),
+                    new List<(int, bool)> { (0, false), (4, false), (2, false) }
+                },
+                // 10 horses, Isolde wins on Jævn Fart, and doesn't draw in HomeStretch (as intended).
+                new object[]
+                {
+                    new List<string> { "Aldebaran", "Avalon", "Comet", "Castor", "Rigel", "Cassiopeja", "Tristan", "Isolde", "Rusch", "Caruso", },
+                    new GallopDeck(new List<GallopCard>
+                    {
+                        DefaultGallopDeck.GetCard("Hesten falder tilbage"),
+                        DefaultGallopDeck.GetCard("Styrt"),
+                        DefaultGallopDeck.GetCard("Hesten presses"),
+                        DefaultGallopDeck.GetCard("Protest"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Stærkt tempo"),
+                        DefaultGallopDeck.GetCard("Pres ikke hesten for hårdt"),
+                        DefaultGallopDeck.GetCard("Stærk fremrykning"),
+                        DefaultGallopDeck.GetCard("Svag slutspurt"),
+                        DefaultGallopDeck.GetCard("Hesten kan ikke følge med"),
+                        DefaultGallopDeck.GetCard("Jævn fart"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Hesten forceres"),
+                        DefaultGallopDeck.GetCard("Hesten kan ikke følge med"),
+                        DefaultGallopDeck.GetCard("Hesten går udemærket"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Omplacering i feltet"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
+                        DefaultGallopDeck.GetCard("Hesten kan ikke følge med"),
+                        DefaultGallopDeck.GetCard("Protest"),
+                    }),
+                    new ChanceDeck(new List<ChanceCard>
+                    {
+                        DefaultChanceDeck.GetCard("Enestående tilfælde"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                        DefaultChanceDeck.GetCard("Banen må repareres"),
+                        DefaultChanceDeck.GetCard("Sælg en hest"),
+                        DefaultChanceDeck.GetCard("Tag et lån"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                        DefaultChanceDeck.GetCard("Staldtips"),
+                        DefaultChanceDeck.GetCard("Overskud fra følauktionen"),
+                        DefaultChanceDeck.GetCard("Hesten halt"),
+                        DefaultChanceDeck.GetCard("Sælg en hest"),
+                        DefaultChanceDeck.GetCard("Gør en forretning"),
+                        DefaultChanceDeck.GetCard("Ekstra afgifter til Grand Prix og Derby"),
+                        DefaultChanceDeck.GetCard("Forsikringsafgifter"),
+                        DefaultChanceDeck.GetCard("Køb en hest"),
+                        DefaultChanceDeck.GetCard("Stald-leje"),
+                        DefaultChanceDeck.GetCard("Vil de købe en hest?"),
+                        DefaultChanceDeck.GetCard("Dårligt regnskab"),
+                        DefaultChanceDeck.GetCard("Formueskat"),
+                    }),
+                    new List<(int, bool)> { (3, false), (1, false), (4, false), (6, false), (11, false), (3, true), (3, false), (0, false), (8, false), (23, true) }
+                },
             };
         }
     }
