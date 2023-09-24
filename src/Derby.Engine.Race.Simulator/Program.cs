@@ -1,6 +1,11 @@
-﻿using Derby.Engine.Race.Simulator;
+﻿using System.CommandLine;
+using Derby.Engine.Race.Simulator.Cmd;
 
-var simulation = new Simulation();
-// simulation.RunCombinations(CombinationRule.All);
+var rootCommand     = new RootCommand("Run the derby simulator, to play through one or multiple Derby games");
+var singleCommand   = SingleRaceCommand.Create();
+var multipleCommand = ManyRaceCommand.Create();
 
-simulation.RunRandom(10);
+rootCommand.AddCommand(singleCommand);
+rootCommand.AddCommand(multipleCommand);
+
+rootCommand.Invoke(args);

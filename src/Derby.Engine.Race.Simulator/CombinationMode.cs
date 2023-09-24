@@ -1,6 +1,6 @@
 ﻿namespace Derby.Engine.Race.Simulator;
 
-public enum CombinationRule
+public enum CombinationMode
 {
     All,
     TwoYears,
