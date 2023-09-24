@@ -11,7 +11,7 @@ public class StatisticsLogger
 
         foreach (var result in accumulator.Results)
         {
-            Console.WriteLine($"{result.Key} | 1:{result.Value.FirstPlaces} | 2:{result.Value.SecondPlaces} | 3:{result.Value.ThirdPlaces} | 4:{result.Value.FourthPlaces} | 5:{result.Value.FifthPlaces} | b:{result.Value.BelowFifthPlaces} | e:{result.Value.Eliminations}");
+            Console.WriteLine($"{result.Key} | 1:{result.Value.FirstPlaces} | 2:{result.Value.SecondPlaces} | 3:{result.Value.ThirdPlaces} | 4:{result.Value.FourthPlaces} | 5:{result.Value.FifthPlaces} | b:{result.Value.BelowFifthPlaces} | e:{result.Value.Eliminations} | g:{result.Value.GallopCardsDrawn} | c:{result.Value.ChanceCardsDrawn}");
         }
     }
 }

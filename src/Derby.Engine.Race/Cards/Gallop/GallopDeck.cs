@@ -19,4 +19,9 @@ public class GallopDeck : BaseDeck<GallopCard>
         deck.Shuffle();
         return deck;
     }
+
+    protected override void RegisterDraw(HorseInRace drawingHorse)
+    {
+        drawingHorse.GallopCardsDrawn++;
+    }
 }

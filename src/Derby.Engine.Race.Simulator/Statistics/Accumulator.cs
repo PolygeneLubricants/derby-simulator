@@ -34,11 +34,16 @@ public class Accumulator
     {
         foreach (var (horse, index) in result.Select((horse, index) => (horse, index)))
         {
-            SetOrCreateResult(horse.OwnedHorse.Horse.Name, index, horse.Eliminated);
+            SetOrCreateResult(horse.OwnedHorse.Horse.Name, index, horse.Eliminated, horse.GallopCardsDrawn, horse.ChanceCardsDrawn);
         }
     }
 
-    private void SetOrCreateResult(string horseName, int place, bool eliminated)
+    private void SetOrCreateResult(
+        string horseName, 
+        int place, 
+        bool eliminated,
+        int gallopCardsDrawn,
+        int chanceCardsDrawn)
     {
         if (!Results.ContainsKey(horseName))
         {
@@ -67,6 +72,9 @@ public class Accumulator
                     Results[horseName].BelowFifthPlaces++; break;
             }
         }
+
+        Results[horseName].GallopCardsDrawn += gallopCardsDrawn;
+        Results[horseName].ChanceCardsDrawn += chanceCardsDrawn;
     }
 }
 
@@ -79,4 +87,6 @@ public class AccumulationResult
     public int FifthPlaces { get; set; }
     public int BelowFifthPlaces { get; set; }
     public int Eliminations { get; set; }
+    public int GallopCardsDrawn { get; set; }
+    public int ChanceCardsDrawn { get; set; }
 }

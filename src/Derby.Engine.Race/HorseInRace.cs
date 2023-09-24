@@ -30,6 +30,10 @@ public class HorseInRace
 
     public bool HasMovedThisTurn { get; set; }
 
+    public int GallopCardsDrawn { get; set; }
+
+    public int ChanceCardsDrawn { get; set; }
+
     public void Eliminate()
     {
         Eliminated = true;

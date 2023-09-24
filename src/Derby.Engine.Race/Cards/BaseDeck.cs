@@ -1,10 +1,10 @@
 ﻿namespace Derby.Engine.Race.Cards;
 
-public class BaseDeck<T>
+public abstract class BaseDeck<T>
 {
     public event Action<HorseInRace, T> CardDrawn = (horse, card) => { };
 
-    public BaseDeck(IList<T> deck)
+    protected BaseDeck(IList<T> deck)
     {
         Deck = deck;
         DiscardPile = new List<T>();
@@ -16,6 +16,8 @@ public class BaseDeck<T>
 
     public T Draw(HorseInRace drawingHorse)
     {
+        RegisterDraw(drawingHorse);
+
         if (Deck.Count == 0)
         {
             Shuffle();
@@ -27,6 +29,8 @@ public class BaseDeck<T>
         CardDrawn.Invoke(drawingHorse, drawnCard);
         return drawnCard;
     }
+
+    protected abstract void RegisterDraw(HorseInRace drawingHorse);
 
     protected void Shuffle()
     {

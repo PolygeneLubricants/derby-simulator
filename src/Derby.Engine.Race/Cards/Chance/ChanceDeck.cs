@@ -1,6 +1,4 @@
-﻿using Derby.Engine.Race.Cards.Chance.Effects;
-
-namespace Derby.Engine.Race.Cards.Chance;
+﻿namespace Derby.Engine.Race.Cards.Chance;
 
 public class ChanceDeck : BaseDeck<ChanceCard>
 {
@@ -17,5 +15,10 @@ public class ChanceDeck : BaseDeck<ChanceCard>
         var deck = new ChanceDeck(DefaultChanceDeck.Deck);
         deck.Shuffle();
         return deck;
+    }
+
+    protected override void RegisterDraw(HorseInRace drawingHorse)
+    {
+        drawingHorse.ChanceCardsDrawn++;
     }
 }
