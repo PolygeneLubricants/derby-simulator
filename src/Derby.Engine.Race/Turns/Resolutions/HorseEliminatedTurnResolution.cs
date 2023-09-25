@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Turns.Resolutions;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Turns.Resolutions;
 
 public class HorseEliminatedTurnResolution : ITurnResolution
 {

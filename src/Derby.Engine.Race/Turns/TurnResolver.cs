@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Board.Lanes.Fields;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
+using Derby.Engine.Race.Horses;
 using Derby.Engine.Race.Turns.Resolutions;
 
 namespace Derby.Engine.Race.Turns;

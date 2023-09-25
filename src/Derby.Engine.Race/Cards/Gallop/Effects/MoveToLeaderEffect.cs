@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects;
 

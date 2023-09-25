@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards.Gallop.Effects
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Cards.Gallop.Effects
 {
     public class MoveEffect : IGallopCardEffect
     {

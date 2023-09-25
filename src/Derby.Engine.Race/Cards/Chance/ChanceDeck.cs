@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards.Chance;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Cards.Chance;
 
 public class ChanceDeck : BaseDeck<ChanceCard>
 {

@@ -2,7 +2,7 @@
 using Derby.Engine.Race.Board.Lanes.Fields;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
-namespace Derby.Engine.Race;
+namespace Derby.Engine.Race.Horses;
 
 public class HorseInRace
 {
@@ -38,7 +38,7 @@ public class HorseInRace
     {
         Eliminated = true;
     }
-    
+
     public bool TurnIsHomeStretch(int turnNumber)
     {
         if (HasMovedThisTurn)
@@ -58,7 +58,7 @@ public class HorseInRace
         }
 
         Location += moves;
-        
+
         if (Location >= Lane.Fields.Count)
         {
             Location = Lane.Fields.Count - 1;

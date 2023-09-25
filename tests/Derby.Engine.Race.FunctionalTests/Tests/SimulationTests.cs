@@ -3,6 +3,7 @@ using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
+using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.FunctionalTests.Tests
 {

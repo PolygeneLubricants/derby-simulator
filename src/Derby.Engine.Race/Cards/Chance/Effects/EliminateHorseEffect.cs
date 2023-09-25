@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards.Chance.Effects;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Cards.Chance.Effects;
 
 public class EliminateHorseEffect : IChanceCardEffect
 {

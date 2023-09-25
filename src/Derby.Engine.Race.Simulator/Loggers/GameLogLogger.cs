@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
+using Derby.Engine.Race.Horses;
 using Derby.Engine.Race.Turns.Resolutions;
 
 namespace Derby.Engine.Race.Simulator.Loggers;

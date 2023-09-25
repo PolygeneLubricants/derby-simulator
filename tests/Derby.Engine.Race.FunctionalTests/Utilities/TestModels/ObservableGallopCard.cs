@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Cards.Gallop;
+using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.FunctionalTests.Utilities.TestModels;
 

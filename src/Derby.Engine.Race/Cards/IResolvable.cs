@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Cards;
 
 public interface IResolvable<TResolution>
 {

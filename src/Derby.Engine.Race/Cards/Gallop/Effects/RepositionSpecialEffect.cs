@@ -1,4 +1,6 @@
-﻿namespace Derby.Engine.Race.Cards.Gallop.Effects;
+﻿using Derby.Engine.Race.Horses;
+
+namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
 // "I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang. Gem kortet til det ikke gælder længere."
 public class RepositionSpecialEffect : IGallopCardEffect
