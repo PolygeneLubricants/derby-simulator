@@ -2,6 +2,9 @@
 
 namespace Derby.Engine.Race.Cards.Chance;
 
+/// <summary>
+///     Specialized deck for Chance cards.
+/// </summary>
 public class ChanceDeck : BaseDeck<ChanceCard>
 {
     public ChanceDeck() : this(new List<ChanceCard>())

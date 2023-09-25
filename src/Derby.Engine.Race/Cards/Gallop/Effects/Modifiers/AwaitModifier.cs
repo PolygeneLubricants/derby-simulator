@@ -1,11 +1,23 @@
-﻿using Derby.Engine.Race.Horses;
+﻿using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers.Exceptions;
+using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
+/// <summary>
+///     Await modifier, which stalls a horse until another horse has caught up.
+///     The horse to await is indicated in <see cref="AwaitType" />.
+///     If the horse to await is eliminated, the await modifier is no longer applicable.
+/// </summary>
 public class AwaitModifier : IModifier
 {
+    /// <summary>
+    ///     The type of await.
+    /// </summary>
     private readonly AwaitType _awaitType;
 
+    /// <summary>
+    ///     The horse to await.
+    /// </summary>
     private HorseInRace? _horseToAwait;
 
     public AwaitModifier(AwaitType awaitType)
@@ -17,10 +29,10 @@ public class AwaitModifier : IModifier
     {
         _horseToAwait = _awaitType switch
         {
-            AwaitType.Last => state.GetLastHorse(),
+            AwaitType.Last    => state.GetLastHorse(),
             AwaitType.Nearest => state.GetHorseBehind(horseWithModifier) ?? horseWithModifier,
-            AwaitType.All => null,
-            _ => throw new ArgumentOutOfRangeException()
+            AwaitType.All     => null,
+            _                 => throw new ArgumentOutOfRangeException()
         };
     }
 
@@ -41,10 +53,8 @@ public class AwaitModifier : IModifier
             {
                 return new ModifierResolution { IsApplicable = false };
             }
-            else
-            {
-                return new ModifierResolution { IsApplicable = true, EndTurn = true };
-            }
+
+            return new ModifierResolution { IsApplicable = true, EndTurn = true };
         }
 
         if (_horseToAwait == null)
@@ -56,10 +66,8 @@ public class AwaitModifier : IModifier
         {
             return new ModifierResolution { IsApplicable = false };
         }
-        else
-        {
-            return new ModifierResolution { IsApplicable = true, EndTurn = true };
-        }
+
+        return new ModifierResolution { IsApplicable = true, EndTurn = true };
     }
 
     private bool HorseToAwaitHasCaughtUp(HorseInRace horseToAwait, HorseInRace horseWithModifier)
@@ -68,9 +76,24 @@ public class AwaitModifier : IModifier
     }
 }
 
+/// <summary>
+///     Indicates the mechanism that applies when awaiting a horse.
+/// </summary>
 public enum AwaitType
 {
+    /// <summary>
+    ///     Horse with modifier will await the last horse in the race at the time of drawing/applying the modifier.
+    /// </summary>
     Last,
+
+    /// <summary>
+    ///     Horse with modifier will await the horse immediately behind this in the race at the time of drawing/applying the
+    ///     modifier.
+    /// </summary>
     Nearest,
+
+    /// <summary>
+    ///     Horse with modifier will await all horses behind this.
+    /// </summary>
     All
 }

@@ -2,6 +2,9 @@
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
+/// <summary>
+///     Effect that has different behavior depending on whether the horse is in the home stretch or not.
+/// </summary>
 public class HomeStretchCompositeEffect : IGallopCardEffect
 {
     private readonly IGallopCardEffect _effectWhenHomestretch;
@@ -21,9 +24,7 @@ public class HomeStretchCompositeEffect : IGallopCardEffect
         {
             return _effectWhenHomestretch.Resolve(horseToPlay, state);
         }
-        else
-        {
-            return _effectWhenNotHomestretch.Resolve(horseToPlay, state);
-        }
+
+        return _effectWhenNotHomestretch.Resolve(horseToPlay, state);
     }
 }

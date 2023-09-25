@@ -7,33 +7,64 @@ using Derby.Engine.Race.Turns.Resolutions;
 
 namespace Derby.Engine.Race;
 
+/// <summary>
+///     Entity encapsulating an entire Derby race.
+///     This entity is the entry point to construct, run and resolve a race.
+/// </summary>
 public class Race
 {
-    public event Action<HorseInRace> TurnStarted = (horseInRace => {});
-    
-    public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace)
-    {
-        var race = new Race()
-        {
-            State = new RaceState(GameBoard.DefaultBoard(), horsesToRace)
-            {
-                GallopDeck = GallopDeck.DefaultDeck(),
-                ChanceDeck = ChanceDeck.DefaultDeck(),
-            }
-        };
-
-        return race;
-    }
+    /// <summary>
+    ///     Turn resolver to resolve each race turn.
+    /// </summary>
+    public readonly TurnResolver TurnResolver;
 
     public Race()
     {
         TurnResolver = new TurnResolver();
     }
 
+    /// <summary>
+    ///     Mutable state of this race.
+    /// </summary>
     public required RaceState State { get; init; }
 
-    public readonly TurnResolver TurnResolver;
-    
+    /// <summary>
+    ///     The final resolution of the race, after it has been concluded.
+    ///     Will be null until <see cref="GameEnded" /> is true.
+    /// </summary>
+    public ITurnResolution? FinalResolution { get; private set; }
+
+    /// <summary>
+    ///     Indicates whether this race has been run to completion.
+    /// </summary>
+    public bool GameEnded { get; private set; }
+
+    /// <summary>
+    ///     Event listener which fires when a horse starts its turn.
+    /// </summary>
+    public event Action<HorseInRace> TurnStarted = horseInRace => { };
+
+    /// <summary>
+    ///     Returns the default Derby race.
+    ///     Default is the configuration which the official board game has.
+    /// </summary>
+    public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace)
+    {
+        var race = new Race
+        {
+            State = new RaceState(GameBoard.DefaultBoard(), horsesToRace)
+            {
+                GallopDeck = GallopDeck.DefaultDeck(),
+                ChanceDeck = ChanceDeck.DefaultDeck()
+            }
+        };
+
+        return race;
+    }
+
+    /// <summary>
+    ///     Resolves 1 turn for 1 horse.
+    /// </summary>
     public ITurnResolution ResolveTurn()
     {
         var horseToPlay = State.GetNextHorseInRace();
@@ -51,7 +82,7 @@ public class Race
         {
             resolution = TurnResolver.ResolveTurn(horseToPlay, State);
         }
-        
+
         CleanupTurn(State, horseToPlay);
 
         if (resolution is DrawTurnResolution or HorseWonTurnResolution)
@@ -63,10 +94,9 @@ public class Race
         return resolution;
     }
 
-    public ITurnResolution? FinalResolution { get; private set; }
-
-    public bool GameEnded { get; private set; }
-
+    /// <summary>
+    ///     Cleans up the race state after a turn has been resolved.
+    /// </summary>
     private void CleanupTurn(RaceState state, HorseInRace? horseToPlay)
     {
         state.IncrementTurnIfApplicable();

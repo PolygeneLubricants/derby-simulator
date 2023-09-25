@@ -2,6 +2,10 @@
 
 namespace Derby.Engine.Race.Board;
 
+/// <summary>
+///     Collection of lanes this board contains.
+///     A Derby board has 4 lanes, one for each age group.
+/// </summary>
 public class LaneCollection
 {
     public required ILane Lane2Years { get; set; }

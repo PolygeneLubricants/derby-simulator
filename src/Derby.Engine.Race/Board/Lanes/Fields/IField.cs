@@ -1,5 +1,8 @@
 ﻿namespace Derby.Engine.Race.Board.Lanes.Fields;
 
+/// <summary>
+///     A field is a position on a lane.
+/// </summary>
 public interface IField
 {
     /// <summary>

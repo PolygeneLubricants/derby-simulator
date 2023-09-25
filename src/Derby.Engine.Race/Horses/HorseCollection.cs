@@ -1,12 +1,21 @@
 ﻿namespace Derby.Engine.Race.Horses;
 
+/// <summary>
+///     The predefined set of horses in the Derby board game.
+/// </summary>
 public static class HorseCollection
 {
+    /// <summary>
+    ///     Gets the horse from the predefined collection with the specified name.
+    /// </summary>
     public static Horse Get(string name)
     {
         return Horses[name];
     }
 
+    /// <summary>
+    ///     Collection of all predefined horses in the Derby board game.
+    /// </summary>
     public static IDictionary<string, Horse> Horses => new Dictionary<string, Horse>
     {
         { "Caruso"    , new Horse { Name = "Caruso"    , Color = Color.Blue,   Years = 2, Moves = new List<int> { 1,2,3,3,4,2,4,3,1,3,2,4 }}},

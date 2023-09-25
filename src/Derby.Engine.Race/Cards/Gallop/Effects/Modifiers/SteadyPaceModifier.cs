@@ -2,6 +2,10 @@
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
+/// <summary>
+///     Implements the steady-pace modifier.
+///     From here-on the horse always moves 4 fields, and no longer draws *any* Gallop cards.
+/// </summary>
 public class SteadyPaceModifier : IModifier
 {
     private readonly int _pace;
@@ -19,8 +23,8 @@ public class SteadyPaceModifier : IModifier
     {
         return new ModifierResolution
         {
-            IsApplicable = true, 
-            Moves = _pace, 
+            IsApplicable = true,
+            Moves = _pace,
             SkipGallopCards = true
         };
     }

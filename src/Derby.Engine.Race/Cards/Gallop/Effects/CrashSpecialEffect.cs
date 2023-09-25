@@ -3,7 +3,11 @@ using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
-// "(Gælder ikke for hest redet af stjernejockey) Lad hesten stå til alle er passeret, eller sidste hest er på linje med Deres. Hvis nogen går i mål regnes Deres hest for at være sidst. Gem kortert til det ikke gælder længere."
+/// <summary>
+///     Special card effect that implements the crash card with the following text:
+///     (Gælder ikke for hest redet af stjernejockey) Lad hesten stå til alle er passeret, eller sidste hest er på linje
+///     med Deres. Hvis nogen går i mål regnes Deres hest for at være sidst. Gem kortert til det ikke gælder længere.
+/// </summary>
 public class CrashSpecialEffect : IGallopCardEffect
 {
     public GallopCardResolution Resolve(HorseInRace horseToPlay, RaceState state)

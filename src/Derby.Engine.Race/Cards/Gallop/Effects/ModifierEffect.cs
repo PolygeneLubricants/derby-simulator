@@ -3,6 +3,9 @@ using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
+/// <summary>
+///     Generic effect that applies a modifier to a horse.
+/// </summary>
 public class ModifierEffect : IGallopCardEffect
 {
     private readonly Func<IModifier> _modifierDelegate;
@@ -18,7 +21,7 @@ public class ModifierEffect : IGallopCardEffect
         var modifier = _modifierDelegate.Invoke();
         modifier.Initialize(horseToPlay, state);
         var resolution = modifier.Apply(horseToPlay, state);
-     
+
         if (resolution.IsApplicable)
         {
             horseToPlay.Modifiers.Add(modifier);

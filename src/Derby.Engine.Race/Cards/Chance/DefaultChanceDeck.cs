@@ -2,13 +2,22 @@
 
 namespace Derby.Engine.Race.Cards.Chance
 {
+    /// <summary>
+    ///     The pre-defined deck of Chance cards in the Derby board game.
+    /// </summary>
     public static class DefaultChanceDeck
     {
+        /// <summary>
+        ///        Get a card by its title.
+        /// </summary>
         public static ChanceCard GetCard(string title)
         {
             return Deck.First(c => c.Title == title);
         }
 
+        /// <summary>
+        ///     The pre-defined deck of Chance cards in the Derby board game.
+        /// </summary>
         public static IList<ChanceCard> Deck => new List<ChanceCard>
         {
             new()

@@ -3,6 +3,10 @@ using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects;
 
+/// <summary>
+///     Move the horse to the current leader of the race (either right behind or on-par).
+///     If the horse is itself the leader, the card does nothing.
+/// </summary>
 public class MoveToLeaderEffect : IGallopCardEffect
 {
     private readonly Position _position;
@@ -21,8 +25,8 @@ public class MoveToLeaderEffect : IGallopCardEffect
         }
 
         var leaderTiebreaker = leader.GetLaneTiebreaker();
-        var closestLocation = GetClosestLocation(horseToPlay, leaderTiebreaker, _position);
-        var moves = closestLocation - horseToPlay.Location;
+        var closestLocation  = GetClosestLocation(horseToPlay, leaderTiebreaker, _position);
+        var moves            = closestLocation - horseToPlay.Location;
 
         // Ignore max move rule.
         var field = horseToPlay.Move(moves, MoveType.CardEffect);

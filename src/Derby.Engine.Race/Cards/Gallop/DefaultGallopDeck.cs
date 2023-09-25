@@ -3,13 +3,22 @@ using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
 namespace Derby.Engine.Race.Cards.Gallop
 {
+    /// <summary>
+    ///     Pre-defined set of Gallop cards available in the Derby board game.
+    /// </summary>
     public static class DefaultGallopDeck
     {
+        /// <summary>
+        ///     Gets a card by title.
+        /// </summary>
         public static GallopCard GetCard(string title)
         {
             return Deck.First(c => c.Title == title);
         }
 
+        /// <summary>
+        ///     The deck of cards in the Derby board game.
+        /// </summary>
         public static IList<GallopCard> Deck => new List<GallopCard>
             {
                 new()

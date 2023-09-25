@@ -2,6 +2,9 @@
 
 namespace Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 
+/// <summary>
+///     The pre-defined 4-year lane of the Derby board game.
+/// </summary>
 public class Lane4Years : BaseLane
 {
     public Lane4Years() : base(PopulateLane())

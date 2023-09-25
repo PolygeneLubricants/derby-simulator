@@ -2,6 +2,9 @@
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
+/// <summary>
+///     Modifier that skips the horse's next turn.
+/// </summary>
 public class SkipTurnModifier : IModifier
 {
     private int _applicableTurn;

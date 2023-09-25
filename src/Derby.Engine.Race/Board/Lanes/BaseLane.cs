@@ -2,6 +2,7 @@
 
 namespace Derby.Engine.Race.Board.Lanes;
 
+/// <inheritdoc />
 public abstract class BaseLane : ILane
 {
     protected BaseLane(IList<IField> fields)
@@ -9,13 +10,16 @@ public abstract class BaseLane : ILane
         Fields = fields;
     }
 
+    /// <inheritdoc />
     public IList<IField> Fields { get; }
 
+    /// <inheritdoc />
     public int GetTiebreaker(int horseLocation)
     {
         return Fields[horseLocation].TieBreaker;
     }
 
+    /// <inheritdoc />
     public int GetClosestLocation(int tieBreakToSeek, SeekerStrategy strategy)
     {
         switch (strategy)
@@ -27,15 +31,13 @@ public abstract class BaseLane : ILane
                     {
                         continue;
                     }
-                    
+
                     if (i == 0)
                     {
                         return 0;
                     }
-                    else
-                    {
-                        return i - 1;
-                    }
+
+                    return i - 1;
                 }
 
                 return Fields.IndexOf(Fields.Last());
@@ -46,22 +48,20 @@ public abstract class BaseLane : ILane
                     {
                         continue;
                     }
-                    
+
                     if (i == 0)
                     {
                         return 0;
                     }
 
                     var diffFromGreater = Math.Abs(Fields[i].TieBreaker - tieBreakToSeek);
-                    var diffFromLower = Math.Abs(Fields[i - 1].TieBreaker - tieBreakToSeek);
+                    var diffFromLower   = Math.Abs(Fields[i - 1].TieBreaker - tieBreakToSeek);
                     if (diffFromGreater < diffFromLower)
                     {
                         return i;
                     }
-                    else
-                    {
-                        return i - 1;
-                    }
+
+                    return i - 1;
                 }
 
                 return Fields.IndexOf(Fields.Last());
