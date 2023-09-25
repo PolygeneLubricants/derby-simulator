@@ -1,8 +1,9 @@
-﻿using Derby.Engine.Race.Horses;
-using Derby.Engine.Race.Simulator.Loggers;
-using Derby.Engine.Race.Simulator.Statistics;
+﻿using Derby.Engine.Race;
+using Derby.Engine.Race.Horses;
+using Derby.Simulator.Loggers;
+using Derby.Simulator.Statistics;
 
-namespace Derby.Engine.Race.Simulator;
+namespace Derby.Simulator;
 
 public class Simulation
 {

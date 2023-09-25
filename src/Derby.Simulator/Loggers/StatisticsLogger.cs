@@ -1,6 +1,6 @@
-﻿using Derby.Engine.Race.Simulator.Statistics;
+﻿using Derby.Simulator.Statistics;
 
-namespace Derby.Engine.Race.Simulator.Loggers;
+namespace Derby.Simulator.Loggers;
 
 public class StatisticsLogger
 {

@@ -1,4 +1,4 @@
-﻿namespace Derby.Engine.Race.Simulator;
+﻿namespace Derby.Simulator;
 
 public enum CombinationMode
 {

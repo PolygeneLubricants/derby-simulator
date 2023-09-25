@@ -15,7 +15,7 @@ Description:
   Run the derby simulator, to play through one or multiple Derby games
 
 Usage:
-  Derby.Engine.Race.Simulator [command] [options]
+  Derby.Simulator [command] [options]
 
 Options:
   --version       Show version information
@@ -23,6 +23,7 @@ Options:
 
 Commands:
   single  Run a single Derby race and show the log for each movement.
+  random  Run a Derby race, where horses are chosen at random, and show the log for each movement.
   many    Run many Derby races and collect results for all games.
 ```
 
@@ -32,17 +33,28 @@ Description:
   Run a single Derby race and show the log for each movement.
 
 Usage:
-  Derby.Engine.Race.Simulator single [options]
+  Derby.Simulator single [options]
 
 Options:
-  --p1 <p1>               The stable of the first player. Indicate horse name. E.g. --p1 Avalon --p1 Isolde
-  --p2 <p2>               The stable of the second player. Indicate horse name. E.g. --p2 Avalon --p1 Isolde
-  --p3 <p3>               The stable of the third player. Indicate horse name. E.g. --p3 Avalon --p1 Isolde
-  --p4 <p4>               The stable of the fourth player. Indicate horse name. E.g. --p4 Avalon --p1 Isolde
-  --p5 <p5>               The stable of the fifth player. Indicate horse name. E.g. --p5 Avalon --p1 Isolde
-  --mode <Manual|Random>  Mode to run a single race. [default: Manual]
-  --c <c>                 Number of horses to run if game mode is random.
-  -?, -h, --help          Show help and usage information
+  --p1 <p1>       The stable of the first player. Indicate horse name. E.g. --p1 Avalon Isolde
+  --p2 <p2>       The stable of the second player. Indicate horse name. E.g. --p2 Avalon Isolde
+  --p3 <p3>       The stable of the third player. Indicate horse name. E.g. --p3 Avalon Isolde
+  --p4 <p4>       The stable of the fourth player. Indicate horse name. E.g. --p4 Avalon Isolde
+  --p5 <p5>       The stable of the fifth player. Indicate horse name. E.g. --p5 Avalon Isolde
+  -?, -h, --help  Show help and usage information
+```
+
+### Random
+```
+Description:
+  Run a Derby race, where horses are chosen at random, and show the log for each movement.
+
+Usage:
+  Derby.Simulator random [options]
+
+Options:
+  --c <c> (REQUIRED)  Number of horses to race. The horses will be equally distributed amongst the players 1 to 5.
+  -?, -h, --help      Show help and usage information
 ```
 
 ### Many
@@ -51,11 +63,11 @@ Description:
   Run many Derby races and collect results for all games.
 
 Usage:
-  Derby.Engine.Race.Simulator many [options]
+  Derby.Simulator many [options]
 
 Options:
-  --mode <All|FiveYears|FourYears|ThreeYears|TwoYears>  Simulation mode to run many games.
-  --size <size>                                         Race size. Number of horses in each race. From 1 to 5.
+  --mode <All|FiveYears|FourYears|ThreeYears|TwoYears>  Combination mode to run many games.
+  --size <size> (REQUIRED)                              Race size. Number of horses in each race. From 1 to 5.
   --i <i>                                               Number of iterations (times) to run the race for the specified
                                                         combination. [default: 1]
   -?, -h, --help                                        Show help and usage information
@@ -66,13 +78,13 @@ Options:
 
 Run a 2-player race where player 1 has Comet and Avalon, and player 2 has Rapid.
 ```
-Derby.Engine.Race.Simulator single --p1 Comet --p1 Avalon --p2 Rapid
+Derby.Simulator single --p1 Comet Avalon --p2 Rapid
 ```
 
 ### Run a random game
 Run a random game with 5 players, each having 1 horse. Random will distribute horses equally amongst players 1 to 5.
 ```
-Derby.Engine.Race.Simulator single --mode random --c 5
+Derby.Simulator random --c 5
 ```
 
 ### Run many games for all horses in heats of 5
@@ -81,13 +93,13 @@ be the cartesian product of the set size, excluding duplicates.
 
 5 horses amongst all 20 horses for 1 iteration will run 20!/15! = 1.860.480 times.
 ```
-Derby.Engine.Race.Simulator many --mode all --size 5 --i 1
+Derby.Simulator many --mode all --size 5 --i 1
 ```
 
 ### Run many games for all 2-years in heats of 3, 1000 times
 5 horses amongst all 5 2-years for 1000 iterations will run 5!/2! * 1000 = 60.000 times.
 ```
-Derby.Engine.Race.Simulator many --mode twoyears --size 3 --i 1000
+Derby.Simulator many --mode twoyears --size 3 --i 1000
 ```
 
 ## Rule interpretations
