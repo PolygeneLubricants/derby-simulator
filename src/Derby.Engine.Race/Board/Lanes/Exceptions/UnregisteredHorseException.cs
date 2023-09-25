@@ -1,4 +1,4 @@
-﻿namespace Derby.Engine.Race.Board.Lanes;
+﻿namespace Derby.Engine.Race.Board.Lanes.Exceptions;
 
 public class UnregisteredHorseException : ArgumentException
 {

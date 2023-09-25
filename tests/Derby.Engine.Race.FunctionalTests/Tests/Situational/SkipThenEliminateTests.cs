@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
@@ -20,10 +21,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.Situational
             var builder = new RaceTestBuilder();
             var race =
                 builder
-                    .WithLane(new Lane2Years().Fields, 2)
-                    .WithLane(new Lane3Years().Fields, 3)
-                    .WithLane(new Lane4Years().Fields, 4)
-                    .WithLane(new Lane5Years().Fields, 5)
+                    .WithPredefinedLanes()
                     .WithHorseInRace(new[] { 1, 2, 3, 3, 4, 2, 4, 3, 1, 3, 2, 4 }, 2, out _)
                     .WithHorseInRace(new[] { 5, 2, 1, 3, 4, 1, 5, 2, 4, 3, 5, 1 }, 3, out _)
                     .WithHorseInRace(new[] { 6, 1, 3, 3, 5, 5, 2, 2, 4, 4, 6, 1 }, 4, out _)
@@ -68,9 +66,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.Situational
             var builder = new RaceTestBuilder();
             var race =
                 builder
-                    .WithLane(new Lane2Years().Fields, 2)
-                    .WithLane(new Lane3Years().Fields, 3)
-                    .WithLane(new Lane4Years().Fields, 4)
+                    .WithPredefinedLanes()
                     .WithHorseInRace(new[] { 1, 2, 3, 3, 4, 2, 4, 3, 1, 3, 2, 4 }, 2, out _)
                     .WithHorseInRace(new[] { 5, 2, 1, 3, 4, 1, 5, 2, 4, 3, 5, 1 }, 3, out _)
                     .WithHorseInRace(new[] { 6, 1, 3, 3, 5, 5, 2, 2, 4, 4, 6, 1 }, 4, out _)

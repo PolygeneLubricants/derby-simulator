@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
@@ -31,10 +32,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
             var builder = new RaceTestBuilder();
             var race =
                 builder
-                    .WithLane(new Lane2Years().Fields, 2)
-                    .WithLane(new Lane3Years().Fields, 3)
-                    .WithLane(new Lane4Years().Fields, 4)
-                    .WithLane(new Lane5Years().Fields, 5)
+                    .WithPredefinedLanes()
                     .WithHorseInRace(new[] { 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 2, out var _)
                     .WithGallopCard(card)
                     .WithChanceCard(chanceCard)

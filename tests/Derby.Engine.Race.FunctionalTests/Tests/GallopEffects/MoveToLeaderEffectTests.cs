@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
 using Derby.Engine.Race.Board.Lanes.Fields;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
@@ -44,10 +45,7 @@ public class MoveToLeaderEffectTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
-                .WithLane(new Lane5Years().Fields, 5)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 30, 1 }, 2, out var _)
                 .WithHorseInRace(new[] { 18, 2 }, 3, out var _)
                 .WithHorseInRace(new[] { 34, secondMovement }, 4, out var _)
@@ -85,10 +83,7 @@ public class MoveToLeaderEffectTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
-                .WithLane(new Lane5Years().Fields, 5)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { firstHorseMovement }, 2, out var _)
                 .WithHorseInRace(new[] { secondHorseMovement }, 3, out var _)
                 .WithHorseInRace(new[] { thirdHorseMovement }, 4, out var _)

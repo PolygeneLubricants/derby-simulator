@@ -1,10 +1,10 @@
 ﻿using Derby.Engine.Race.Board.Lanes.Fields;
 
-namespace Derby.Engine.Race.Board.Lanes;
+namespace Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 
-public class Lane3Years : BaseLane
+public class Lane4Years : BaseLane
 {
-    public Lane3Years() : base(PopulateLane())
+    public Lane4Years() : base(PopulateLane())
     {
     }
 
@@ -20,12 +20,14 @@ public class Lane3Years : BaseLane
             new NeutralField(500),
             new GallopField(600),
             // Curve start
-            new NeutralField(671),
-            new NeutralField(742),
-            new NeutralField(814),
-            new ChanceField(885),
-            new NeutralField(957),
-            new NeutralField(1028),
+            new NeutralField(656),
+            new NeutralField(711),
+            new NeutralField(767),
+            new NeutralField(822),
+            new ChanceField(878),
+            new NeutralField(933),
+            new NeutralField(989),
+            new NeutralField(1044),
             new NeutralField(1100),
             // Curve end
             new GallopField(1200),
@@ -37,12 +39,14 @@ public class Lane3Years : BaseLane
             new NeutralField(1800),
             new ChanceField(1900),
             // Curve start
-            new NeutralField(1971),
-            new NeutralField(2043),
-            new NeutralField(2114),
-            new GallopField(2186),
-            new NeutralField(2257),
-            new NeutralField(2329),
+            new NeutralField(1956),
+            new NeutralField(2011),
+            new NeutralField(2067),
+            new NeutralField(2122),
+            new GallopField(2178),
+            new NeutralField(2233),
+            new NeutralField(2289),
+            new NeutralField(2344),
             new NeutralField(2400),
             // Curve end
             new ChanceField(2500),

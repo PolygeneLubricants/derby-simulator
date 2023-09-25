@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
 using Derby.Engine.Race.Board.Lanes.Fields;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Chance.Effects;
 using Derby.Engine.Race.Cards.Gallop;

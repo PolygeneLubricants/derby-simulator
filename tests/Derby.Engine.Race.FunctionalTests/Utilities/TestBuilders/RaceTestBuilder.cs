@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race.Board;
 using Derby.Engine.Race.Board.Lanes.Fields;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
@@ -21,7 +22,14 @@ public class RaceTestBuilder
     {
         _availableStables = Enum.GetValues<StableCode>().ToList();
         _horsesInRace = new List<OwnedHorse>();
-        _board = new GameBoard { Lanes = new LaneCollection() };
+        _board = new GameBoard { Lanes = new LaneCollection
+        {
+            Lane2Years = new CustomLane(new List<IField>()),
+            Lane3Years = new CustomLane(new List<IField>()),
+            Lane4Years = new CustomLane(new List<IField>()),
+            Lane5Years = new CustomLane(new List<IField>())
+        }
+        };
         _chanceDeck = new ChanceDeck();
         _gallopDeck = new GallopDeck();
     }
@@ -97,6 +105,15 @@ public class RaceTestBuilder
         var fields = startField.Concat<IField>(neutralFields).Concat<IField>(goalField).ToList();
 
         return WithLane(fields, years);
+    }
+
+    public RaceTestBuilder WithPredefinedLanes()
+    {
+        _board.Lanes.Lane2Years = new Lane2Years();
+        _board.Lanes.Lane3Years = new Lane3Years();
+        _board.Lanes.Lane4Years = new Lane4Years();
+        _board.Lanes.Lane5Years = new Lane5Years();
+        return this;
     }
 
     public RaceTestBuilder WithLane(IList<IField> fields, int years)

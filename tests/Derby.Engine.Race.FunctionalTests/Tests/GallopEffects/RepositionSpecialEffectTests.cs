@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Cards.Gallop.Effects;
 using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
@@ -20,9 +21,7 @@ public class RepositionSpecialEffectTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 1, 2, 2, finalMove }, 4, out var _)
                 .WithHorseInRace(new[] { 6, 1, 1, 1 }, 2, out var _)
                 .WithHorseInRace(new[] { 7, 4, 1, 1 }, 3, out var _)
@@ -61,9 +60,7 @@ public class RepositionSpecialEffectTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 26, 1, 1, 0 }, 2, out var _)
                 .WithHorseInRace(new[] { 28, 4, 1, 0 }, 3, out var _)
                 .WithHorseInRace(new[] { 37, 3, 1, 1 }, 4, out var _)
@@ -103,9 +100,7 @@ public class RepositionSpecialEffectTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 26, 1 }, 2, out var _)
                 .WithHorseInRace(new[] { 28, 4 }, 3, out var _)
                 .WithHorseInRace(new[] { 36, 4 }, 4, out var _)

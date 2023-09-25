@@ -1,4 +1,5 @@
 ﻿using Derby.Engine.Race.Board.Lanes;
+using Derby.Engine.Race.Board.Lanes.PredefinedLanes;
 using Derby.Engine.Race.FunctionalTests.Utilities.TestBuilders;
 using Derby.Engine.Race.Turns.Resolutions;
 
@@ -274,10 +275,7 @@ public class MoveTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
-                .WithLane(new Lane5Years().Fields, 5)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 9 }, 2, out var first)
                 .WithHorseInRace(new[] { 10 }, 3, out var second)
                 .WithHorseInRace(new[] { 11 }, 4, out var third)
@@ -309,10 +307,7 @@ public class MoveTests
         var builder = new RaceTestBuilder();
         var race =
             builder
-                .WithLane(new Lane2Years().Fields, 2)
-                .WithLane(new Lane3Years().Fields, 3)
-                .WithLane(new Lane4Years().Fields, 4)
-                .WithLane(new Lane5Years().Fields, 5)
+                .WithPredefinedLanes()
                 .WithHorseInRace(new[] { 24 }, 2, out var first)
                 .WithHorseInRace(new[] { 27 }, 3, out var fourth)
                 .WithHorseInRace(new[] { 31 }, 4, out var third)
