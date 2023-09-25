@@ -1,10 +1,12 @@
-﻿using Derby.Engine.Race.Board;
+﻿using System.Runtime.CompilerServices;
+using Derby.Engine.Race.Board;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
 using Derby.Engine.Race.Horses;
 using Derby.Engine.Race.Turns;
 using Derby.Engine.Race.Turns.Resolutions;
 
+[assembly:InternalsVisibleTo("Derby.Engine.Race.FunctionalTests")]
 namespace Derby.Engine.Race;
 
 /// <summary>

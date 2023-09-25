@@ -5,7 +5,7 @@ namespace Derby.Engine.Race.Board;
 /// <summary>
 ///     The derby game board.
 /// </summary>
-public class GameBoard
+internal class GameBoard
 {
     /// <summary>
     ///     The lanes of the game board.

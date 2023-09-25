@@ -16,7 +16,7 @@ public class RaceState
     /// </summary>
     private IList<HorseInRace> _movableHorsesInRace;
 
-    public RaceState(GameBoard gameBoard, IEnumerable<OwnedHorse> horsesToRace)
+    internal RaceState(GameBoard gameBoard, IEnumerable<OwnedHorse> horsesToRace)
     {
         Board = gameBoard;
         RegisteredHorses = Register(horsesToRace).ToList();
@@ -28,7 +28,7 @@ public class RaceState
     /// <summary>
     ///     The game board used the current state.
     /// </summary>
-    public GameBoard Board { get; }
+    internal GameBoard Board { get; }
 
     /// <summary>
     ///     The chance deck used for the current state.
