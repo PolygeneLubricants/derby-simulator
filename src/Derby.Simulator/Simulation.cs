@@ -75,6 +75,13 @@ public class Simulation
         }
     }
 
+    public void RunCombinations(string[] horseNames, int iterations)
+    {
+        var horses = MapHorse(horseNames).Select(h => h.Horse).ToArray();
+        var accumulator = new Accumulator();
+        RunCombinations(accumulator, new List<Horse[]> { horses }, iterations);
+    }
+
     public void RunCombinations(CombinationMode mode, int raceSize, int iterations)
     {
         var accumulator = new Accumulator();

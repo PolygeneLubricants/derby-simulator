@@ -73,6 +73,21 @@ Options:
   -?, -h, --help                                        Show help and usage information
 ```
 
+### Odds
+```
+Description:
+  Calculates the odds of the specified group of horses running i races.
+
+Usage:
+  Derby.Simulator odds [options]
+
+Options:
+  --horses <horses> (REQUIRED)  Names of the horses in the race. Indicate horses' names. E.g. --horses Avalon Isolde
+                                Whispering
+  --i <i>                       Number of iterations to run to calculate odds. Defaults to 1.000. [default: 1000]
+  -?, -h, --help                Show help and usage information
+```
+
 ## Command examples
 ### Run a single game
 
