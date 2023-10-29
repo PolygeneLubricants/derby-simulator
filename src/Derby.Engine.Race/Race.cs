@@ -2,11 +2,12 @@
 using Derby.Engine.Race.Board;
 using Derby.Engine.Race.Cards.Chance;
 using Derby.Engine.Race.Cards.Gallop;
+using Derby.Engine.Race.Game.GlobalModifiers;
 using Derby.Engine.Race.Horses;
 using Derby.Engine.Race.Turns;
 using Derby.Engine.Race.Turns.Resolutions;
 
-[assembly:InternalsVisibleTo("Derby.Engine.Race.FunctionalTests")]
+[assembly: InternalsVisibleTo("Derby.Engine.Race.FunctionalTests")]
 namespace Derby.Engine.Race;
 
 /// <summary>
@@ -50,14 +51,15 @@ public class Race
     ///     Returns the default Derby race.
     ///     Default is the configuration which the official board game has.
     /// </summary>
-    public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace)
+    public static Race GetDefault(IEnumerable<OwnedHorse> horsesToRace, IGlobalModifier globalModifier)
     {
         var race = new Race
         {
             State = new RaceState(GameBoard.DefaultBoard(), horsesToRace)
             {
                 GallopDeck = GallopDeck.DefaultDeck(),
-                ChanceDeck = ChanceDeck.DefaultDeck()
+                ChanceDeck = ChanceDeck.DefaultDeck(),
+                GlobalModifier = globalModifier
             }
         };
 
