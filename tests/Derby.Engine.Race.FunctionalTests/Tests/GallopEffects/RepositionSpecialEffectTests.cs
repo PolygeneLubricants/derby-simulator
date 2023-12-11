@@ -12,9 +12,9 @@ public class RepositionSpecialEffectTests
 {
     // Afvent den nærmeste bagved liggende hest.
     [Theory]
-    [InlineData(1)]
-    [InlineData(2)]
-    public void RepositionSpecialEffect_AsGallopCardWhenAwaiting_BehaveAsGallopCard(int finalMove)
+    [InlineData(3)] // On-par
+    [InlineData(4)] // Overtakes with 1
+    public void RepositionSpecialEffect_AsGallopCardWhenAwaiting_BehaveAsGallopCard(int overtakingMove)
     {
         // Arrange
         var card = new GallopCard { Title = "", Description = "", CardEffect = new HomeStretchCompositeEffect(new RepositionSpecialEffect(), new ModifierEffect(() => new AwaitModifier(AwaitType.Nearest))) };
@@ -22,33 +22,34 @@ public class RepositionSpecialEffectTests
         var race =
             builder
                 .WithPredefinedLanes()
-                .WithHorseInRace(new[] { 1, 2, 2, finalMove }, 4, out var _)
+                .WithHorseInRace(new[] { 1, 2, 2, 1 }, 4, out var _)
                 .WithHorseInRace(new[] { 6, 1, 1, 1 }, 2, out var _)
-                .WithHorseInRace(new[] { 7, 4, 1, 1 }, 3, out var _)
+                .WithHorseInRace(new[] { 3, overtakingMove, 1, 1 }, 3, out var _)
                 .WithGallopCard(card)
+                .WithNoEffectGallopCard()
                 .Build();
 
         // Act
         _ = race.ResolveTurn(); // Move to 1
         _ = race.ResolveTurn(); // Move to 6 pick up Gallop and wait
-        _ = race.ResolveTurn(); // Move to 7
+        _ = race.ResolveTurn(); // Move to 3
 
         _ = race.ResolveTurn(); // Move to 3
         _ = race.ResolveTurn(); // Wait
-        _ = race.ResolveTurn(); // Move to 11
+        _ = race.ResolveTurn(); // Move to 6(7) (Overtakes/on-par with waiting horse)
 
         _ = race.ResolveTurn(); // Move to 5
-        _ = race.ResolveTurn(); // Wait
-        _ = race.ResolveTurn(); // Move to 12
+        _ = race.ResolveTurn(); // Moves to 7
+        _ = race.ResolveTurn(); // Move to 7(8)
 
-        _ = race.ResolveTurn(); // Move to 6(7)
-        _ = race.ResolveTurn(); // Move to 7
-        _ = race.ResolveTurn(); // Move to 13
+        _ = race.ResolveTurn(); // Move to 6
+        _ = race.ResolveTurn(); // Move to 8
+        _ = race.ResolveTurn(); // Move to 8(9)
 
         // Assert
-        Assert.Equal(5 + finalMove, race.State.RegisteredHorses[0].Location);
-        Assert.Equal(7, race.State.RegisteredHorses[1].Location);
-        Assert.Equal(13, race.State.RegisteredHorses[2].Location);
+        Assert.Equal(6, race.State.RegisteredHorses[0].Location);
+        Assert.Equal(8, race.State.RegisteredHorses[1].Location);
+        Assert.Equal(5 + overtakingMove, race.State.RegisteredHorses[2].Location);
     }
 
     // I opløbet: Flyt i mål, hvis hesten ikke fører. Bliv ellers stående til næste omgang.

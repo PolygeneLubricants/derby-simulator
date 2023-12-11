@@ -1,5 +1,4 @@
-﻿using Derby.Engine.Race.Cards.Gallop.Effects.Modifiers.Exceptions;
-using Derby.Engine.Race.Horses;
+﻿using Derby.Engine.Race.Horses;
 
 namespace Derby.Engine.Race.Cards.Gallop.Effects.Modifiers;
 
@@ -16,9 +15,21 @@ public class AwaitModifier : IModifier
     private readonly AwaitType _awaitType;
 
     /// <summary>
-    ///     The horse to await.
+    ///     The number of horses behind at the time of applying the modifier.
     /// </summary>
-    private HorseInRace? _horseToAwait;
+    private int _initialHorsesBehind;
+
+    /// <summary>
+    ///     The number of horses behind which will trigger the end of the await.
+    /// </summary>
+    private int _targetHorsesBehind;
+
+    /// <summary>
+    ///     Number of eliminated horses behind at the time of applying the modifier.
+    ///     This is important, as horses could be eliminated whilst awaiting. In this case, the eliminated
+    ///     horse(s) will not count towards the number of horses behind.
+    /// </summary>
+    private int _eliminatedHorsesBehind;
 
     public AwaitModifier(AwaitType awaitType)
     {
@@ -27,42 +38,21 @@ public class AwaitModifier : IModifier
 
     public void Initialize(HorseInRace horseWithModifier, RaceState state)
     {
-        _horseToAwait = _awaitType switch
+        var horsesBehind = state.GetHorsesBehind(horseWithModifier);
+        _eliminatedHorsesBehind = horsesBehind.Count(horse => horse.Eliminated);
+        _initialHorsesBehind = horsesBehind.Count();
+        _targetHorsesBehind = _awaitType switch
         {
-            AwaitType.Last    => state.GetLastHorse(),
-            AwaitType.Nearest => state.GetHorseBehind(horseWithModifier) ?? horseWithModifier,
-            AwaitType.All     => null,
+            AwaitType.Nearest => _initialHorsesBehind - 1,
+            AwaitType.Last    => 0,
+            AwaitType.All     => 0,
             _                 => throw new ArgumentOutOfRangeException()
         };
     }
 
     public ModifierResolution Apply(HorseInRace horseWithModifier, RaceState state)
     {
-        // Handle edge-case, when horse is awaiting a horse which has then been eliminated.
-        // In this case, the horse is soft-locked if not handled like this.
-        // Note, the rules do not specify this situation, as an alternate interpretation could be,
-        // to pick the _next_ horse that fits the card criteria.
-        if (_horseToAwait is { Eliminated: true })
-        {
-            return new ModifierResolution { IsApplicable = false };
-        }
-
-        if (_awaitType == AwaitType.All)
-        {
-            if (state.GetLastHorse().GetLaneTiebreaker() >= horseWithModifier.GetLaneTiebreaker())
-            {
-                return new ModifierResolution { IsApplicable = false };
-            }
-
-            return new ModifierResolution { IsApplicable = true, EndTurn = true };
-        }
-
-        if (_horseToAwait == null)
-        {
-            throw new ModifierNotInitializedException();
-        }
-
-        if (HorseToAwaitHasCaughtUp(_horseToAwait, horseWithModifier))
+        if (HorseToAwaitHasCaughtUp(state, horseWithModifier))
         {
             return new ModifierResolution { IsApplicable = false };
         }
@@ -70,9 +60,15 @@ public class AwaitModifier : IModifier
         return new ModifierResolution { IsApplicable = true, EndTurn = true };
     }
 
-    private bool HorseToAwaitHasCaughtUp(HorseInRace horseToAwait, HorseInRace horseWithModifier)
+    private bool HorseToAwaitHasCaughtUp(RaceState state, HorseInRace horseWithModifier)
     {
-        return horseToAwait.GetLaneTiebreaker() >= horseWithModifier.GetLaneTiebreaker();
+        if(_initialHorsesBehind - _eliminatedHorsesBehind <= 0)
+        {
+            return true;
+        }
+
+        var horsesBehind = state.GetHorsesBehind(horseWithModifier);
+        return (horsesBehind.Count() - horsesBehind.Where(h => h.Eliminated).Count()) <= (_targetHorsesBehind - horsesBehind.Where(h => h.Eliminated).Count());
     }
 }
 
