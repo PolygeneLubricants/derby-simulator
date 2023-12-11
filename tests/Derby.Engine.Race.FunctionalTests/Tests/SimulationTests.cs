@@ -135,7 +135,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests
                     }),
                     new List<(int, bool)> { (0, false), (4, false), (2, false) }
                 },
-                // 10 horses, Isolde wins on Jævn Fart, and doesn't draw in HomeStretch (as intended).
+                // 10 horses, Isolde wins on Jævn Fart, and draws in HomeStretch (as intended).
                 new object[]
                 {
                     new List<string> { "Aldebaran", "Avalon", "Comet", "Castor", "Rigel", "Cassiopeja", "Tristan", "Isolde", "Rusch", "Caruso", },
@@ -162,6 +162,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests
                         DefaultGallopDeck.GetCard("Fin galop"),
                         DefaultGallopDeck.GetCard("Hesten kan ikke følge med"),
                         DefaultGallopDeck.GetCard("Protest"),
+                        DefaultGallopDeck.GetCard("Fin galop"),
                     }),
                     new ChanceDeck(new List<ChanceCard>
                     {

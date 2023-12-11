@@ -140,10 +140,10 @@ Field 8 in lane 3, however, is ahead of field 8 in lane 4 and 5 (but behind fiel
 The steady pace card states, that a horse will move 4 fields from next turn and onwards,
 and will not pick up any gallop cards.
 
-This has been interpreted as *all* gallop cards, including the card picked up when 
-the horse is in home stretch.
+This has been interpreted as gallop cards via gallop card fields, and not the card picked up when 
+the horse is in home stretch, which the horse will still draw.
 
-Alternatively, this could be interpreted as all gallop cards from gallop card fields.
+Alternatively, this could be interpreted as all gallop cards, including the home stretch gallop cards.
 This interpretation has not been used.
 
 ### Await next and last horse
