@@ -152,19 +152,18 @@ Multiple gallop cards state, that the horse must wait for the following
 or last horse to be on-par with the current horse, before the current horse
 may move again.
 
-This has been interpreted as, when the card is drawn, observe who is
-the next and last horse in the game, and wait for those horses specifically.
-If the order changes throughout the turns, e.g. the last horse overtaking another horse,
-rendering a new horse as the last, then the current horse must 
-still wait for the original last horse.
+This has been interpreted as when *any* horse and not a specific horse:
 
-Alternatively, this could be interpreted as, wait for the last or following horse, and
-assess this *every* turn. E.g. if the last horse overtakes another horse,
-then the horse-to-await is now a new horse, the new last. 
-This interpretation has not been used because of
-gallop card, crash, which specifically states that the horse must wait
-for *all* horses to pass, such differentiating the wording on this card,
-from the card, *Hesten falder tilbage*, which specifically states the last horse.
+If the card states, await the horse behind, the horse will resume running
+once *any* horse behind the current horse is on-par with the current horse.
+
+If the card states, await the last horse, the horse will resume running
+once *all* horses behind the current horse is on-par with the current horse.
+
+Alternatively, the await-effect could be interpreted as await a _specific_ horse.
+I.e. if the card states, await the horse behind, this specific horse would be noted,
+and if another horse overtakes the current horse, it would not resumt moving.
+This interpretation has not been used.
 
 ### Horses on the same field in the same lane
 If two or more horses are on the same field in the same lane,
@@ -179,5 +178,5 @@ It can occur, that a horse is awaiting another horse, which is then eliminated
 before it overtakes the awaiting horse. In this case, the awaiting horse
 is effectively soft-locked from the game.
 
-It has been interpreted as the awaiting horse may resume movement, should the horse 
-be eliminated.
+It has been interpreted as the awaiting horse may resume movement, 
+should the horse awaited horse be eliminated.
