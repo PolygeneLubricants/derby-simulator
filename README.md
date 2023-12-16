@@ -180,3 +180,19 @@ is effectively soft-locked from the game.
 
 It has been interpreted as the awaiting horse may resume movement, 
 should the horse awaited horse be eliminated.
+
+### Repeated movement
+In the traditional Derby 2023 (2nd Edition Jägersro), 
+the rulebook states for card 'Stærkt tempo!', that if a horse is not in the lead,
+it moves the same number of moves that it previously moved.
+
+This has been interpreted as the same number moves that it moved in the previous turn,
+based on its race program, and *not* the same number of moves it moved most recently,
+based on any factor, such as gallop card effects like 'Fin galop'.
+
+This interpretation has been chosen, as it is unlikely that players in the 
+over-the-board game would be able to keep track of all previous movement 
+when the card is drawn.
+It also opens up for complicated scenarios, if a gallop card states that
+the horse moves to the leader position. Would this then count as a previous movement,
+and the number of moves between its original position and the leader is repeated?
