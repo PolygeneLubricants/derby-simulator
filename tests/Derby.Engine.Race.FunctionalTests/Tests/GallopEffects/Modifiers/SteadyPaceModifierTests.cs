@@ -92,10 +92,10 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
 
             _ = race.ResolveTurn(); // Moves to 26
             _ = race.ResolveTurn(); // Is home stretch, draw steady pace gallop card and move 1 and draw steady pace
-            _ = race.ResolveTurn(); // Moves 1
+            _ = race.ResolveTurn(); // IS home strech again, draw steady pace gallop card and move 1.
 
             // Assert
-            Assert.Equal(2, gallopCardDrawTimes);
+            Assert.Equal(3, gallopCardDrawTimes);
             Assert.Equal(28, race.State.RegisteredHorses[0].Location);
         }
     }

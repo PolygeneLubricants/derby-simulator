@@ -123,6 +123,16 @@ public class RaceState
     }
 
     /// <summary>
+    ///     Gets the horses that are immediately behind the current horse on the board.
+    ///     If horses tie on the same square, they are considered to be beside each other, and not behind.
+    /// </summary>
+    public IEnumerable<HorseInRace> GetHorsesBehind(HorseInRace horseToFindBehind)
+    {
+        var horsesBySlowest = _movableHorsesInRace.Reverse().OrderBy(horse => horse.GetLaneTiebreaker()).ToList();
+        return horsesBySlowest.Where(h => h.GetLaneTiebreaker() < horseToFindBehind.GetLaneTiebreaker());
+    }
+
+    /// <summary>
     ///     Gets the horse which is the next to take turn, as determined by <see cref="NextHorseInTurn" />.
     ///     Note: This value is pure and only increments at the end of the horse's turn.
     /// </summary>
@@ -165,6 +175,11 @@ public class RaceState
         {
             // Horse has been eliminated, and counter should not be incremented
             // unless it is last.
+        }
+        else if(previousCount > _movableHorsesInRace.Count && NextHorseInTurn == previousCount - 1)
+        {
+            // Horse has been eliminated, and it is the last horse.
+            NextHorseInTurn = 0;
         }
         else
         {

@@ -179,20 +179,25 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.GallopEffects.Modifiers
                         new NeutralField(400),
                         new GoalField(500)
                     }, 2)
-                    .WithHorseInRace(new[] { 2, 2 }, 2, out _)
-                    .WithHorseInRace(new[] { 3, 1 }, 2, out _)
-                    .WithHorseInRace(new[] { 1, 1 }, 2, out _)
+                    .WithHorseInRace(new[] { 3, 10 , 1 }, 2, out _)
+                    .WithHorseInRace(new[] { 2, 1, 1 }, 2, out _)
+                    .WithHorseInRace(new[] { 1, 10, 1 }, 2, out _)
                     .WithGallopCard(card)
+                    .WithNoEffectGallopCard()
                     .WithChanceCard(eliminate)
                     .Build();
 
             // Act
-            _ = race.ResolveTurn(); // Move 2
-            _ = race.ResolveTurn(); // Move 3, pick up await
-            _ = race.ResolveTurn(); // Move 1 gets eliminated
+            _ = race.ResolveTurn(); // Move to 3, pick up await
+            _ = race.ResolveTurn(); // Move to 2
+            _ = race.ResolveTurn(); // Move to 1 gets eliminated
 
-            _ = race.ResolveTurn(); // Move 0
-            _ = race.ResolveTurn(); // Move 1 as awaited horse is eliminated
+            _ = race.ResolveTurn(); // Wait, as horse is still behind, even though one has been eliminated.
+            _ = race.ResolveTurn(); // Move to 3, Draw no effect Gallop card
+                                    // Third horse eliminated, no longer moves.
+
+            _ = race.ResolveTurn(); // Move to 4
+            _ = race.ResolveTurn(); // Move to 4, no longer waits.
 
             // Assert
             Assert.Equal(4, race.State.RegisteredHorses[0].Location);

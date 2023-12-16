@@ -91,7 +91,7 @@ public class TurnResolver
         }
 
         // Check move modifiers
-        if (horseToPlay.TurnIsHomeStretch(state.CurrentTurn) && !ShouldSkipGallopCard(modifierResolution))
+        if (horseToPlay.TurnIsHomeStretch(state.CurrentTurn))
         {
             var drawnGallopCard      = state.GallopDeck.Draw(horseToPlay);
             var gallopCardResolution = drawnGallopCard.Resolve(horseToPlay, state);
