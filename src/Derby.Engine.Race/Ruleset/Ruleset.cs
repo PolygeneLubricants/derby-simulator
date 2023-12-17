@@ -11,10 +11,10 @@ public class Ruleset
     /// <summary>
     ///     The Gallop deck used in this ruleset.
     /// </summary>
-    public IList<GallopCard> GallopDeck { get; init; }
+    public GallopDeck GallopDeck { get; init; }
 
     /// <summary>
     ///     The chance deck used in this ruleset.
     /// </summary>
-    public IList<ChanceCard> ChanceDeck { get; init; }
+    public ChanceDeck ChanceDeck { get; init; }
 }

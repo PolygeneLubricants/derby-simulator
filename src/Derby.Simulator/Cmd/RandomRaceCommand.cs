@@ -1,4 +1,5 @@
-﻿using System.CommandLine;
+﻿using Derby.Engine.Race.Ruleset;
+using System.CommandLine;
 
 namespace Derby.Simulator.Cmd;
 
@@ -13,18 +14,25 @@ public class RandomRaceCommand
             IsRequired = true
         };
 
+        var rulesetOption = new Option<RulesetType>(
+            name: "--r",
+            description: "Specify the ruleset/version of the board-game to run the simulation against.")
+        {
+            IsRequired = true
+        };
+
 
         var randomCommand = new Command("random", "Run a Derby race, where horses are chosen at random, and show the log for each movement.")
         {
-            randomHorseCountOption
+            randomHorseCountOption, rulesetOption
         };
 
-        randomCommand.SetHandler(randomHorseCount =>
+        randomCommand.SetHandler((randomHorseCount, ruleset) =>
         {
             var simulation = new Simulation();
-            simulation.RunRandom(randomHorseCount);
+            simulation.RunRandom(randomHorseCount, ruleset);
             
-        }, randomHorseCountOption);
+        }, randomHorseCountOption, rulesetOption);
 
         return randomCommand;
     }

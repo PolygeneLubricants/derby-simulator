@@ -1,5 +1,6 @@
 ﻿using Derby.Engine.Race;
 using Derby.Engine.Race.Horses;
+using Derby.Engine.Race.Ruleset;
 using Derby.Simulator.Loggers;
 using Derby.Simulator.Statistics;
 
@@ -7,7 +8,7 @@ namespace Derby.Simulator;
 
 public class Simulation
 {
-    public void RunRandom(int horseCount)
+    public void RunRandom(int horseCount, RulesetType ruleset)
     {
         if (horseCount is <= 0 or > 10)
         {
@@ -17,7 +18,7 @@ public class Simulation
         var horsesInRace = HorseCollection.Horses.Values.OrderBy(_ => Guid.NewGuid()).Take(horseCount).Select(h => h.Name).ToList();
         var horsesToRace = MapHorse(horsesInRace);
 
-        var race   = Race.GetDefault(horsesToRace);
+        var race   = Race.GetDefault(horsesToRace, ruleset);
         var logger = new GameLogLogger(race);
 
         var turnLimit = 100_000;
@@ -34,7 +35,8 @@ public class Simulation
         IList<string>? p2Horses,
         IList<string>? p3Horses,
         IList<string>? p4Horses,
-        IList<string>? p5Horses)
+        IList<string>? p5Horses,
+        RulesetType ruleset)
     {
         IList<OwnedHorse> horsesInRace = new List<OwnedHorse>();
         if (p1Horses != null && p1Horses.Any())
@@ -63,7 +65,7 @@ public class Simulation
             horsesInRace = horsesInRace.Concat(horses).ToList();
         }
 
-        var race   = Race.GetDefault(horsesInRace);
+        var race   = Race.GetDefault(horsesInRace, ruleset);
         var logger = new GameLogLogger(race);
 
         var turnLimit = 100_000;
@@ -75,40 +77,40 @@ public class Simulation
         }
     }
 
-    public void RunCombinations(string[] horseNames, int iterations)
+    public void RunCombinations(string[] horseNames, int iterations, RulesetType ruleset)
     {
         var horses = MapHorse(horseNames).Select(h => h.Horse).ToArray();
         var accumulator = new Accumulator();
-        RunCombinations(accumulator, new List<Horse[]> { horses }, iterations);
+        RunCombinations(accumulator, new List<Horse[]> { horses }, iterations, ruleset);
     }
 
-    public void RunCombinations(CombinationMode mode, int raceSize, int iterations)
+    public void RunCombinations(CombinationMode mode, int raceSize, int iterations, RulesetType ruleset)
     {
         var accumulator = new Accumulator();
         switch (mode)
         {
             case CombinationMode.All:
-                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values);
+                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values, ruleset);
                 break;
             case CombinationMode.TwoYears:
-                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 2).ToList());
+                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 2).ToList(), ruleset);
                 break;
 
             case CombinationMode.ThreeYears:
-                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 3).ToList());
+                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 3).ToList(), ruleset);
                 break;
             case CombinationMode.FourYears:
-                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 4).ToList());
+                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 4).ToList(), ruleset);
                 break;
             case CombinationMode.FiveYears:
-                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 5).ToList());
+                RunCombinations(accumulator, raceSize, iterations, HorseCollection.Horses.Values.Where(h => h.Years == 5).ToList(), ruleset);
                 break;
             default:
                 throw new NotSupportedException("TBD");
         }
     }
 
-    private void RunCombinations(Accumulator accumulator, int raceSize, int iterations, ICollection<Horse> horsesToCombine)
+    private void RunCombinations(Accumulator accumulator, int raceSize, int iterations, ICollection<Horse> horsesToCombine, RulesetType ruleset)
     {
         if (raceSize is < 1 or > 5)
         {
@@ -116,7 +118,7 @@ public class Simulation
         }
 
         var cartesianProduct = GetCartesianProduct(horsesToCombine, raceSize);
-        RunCombinations(accumulator, cartesianProduct, iterations);
+        RunCombinations(accumulator, cartesianProduct, iterations, ruleset);
     }
 
     private IEnumerable<Horse[]> GetCartesianProduct(ICollection<Horse> horsesToCombine, int raceSize)
@@ -163,13 +165,13 @@ public class Simulation
         }
     }
 
-    private void RunCombinations(Accumulator accumulator, IEnumerable<Horse[]> cartesianProduct, int iterations)
+    private void RunCombinations(Accumulator accumulator, IEnumerable<Horse[]> cartesianProduct, int iterations, RulesetType ruleset)
     {
         for (var i = 0; i < iterations; i++)
         {
             foreach (var horsesInRace in cartesianProduct)
             {
-                RunCombinations(accumulator, horsesInRace);
+                RunCombinations(accumulator, horsesInRace, ruleset);
             }
         }
 
@@ -177,9 +179,9 @@ public class Simulation
         logger.Log(accumulator);
     }
 
-    private void RunCombinations(Accumulator accumulator, Horse[] horsesInRace)
+    private void RunCombinations(Accumulator accumulator, Horse[] horsesInRace, RulesetType ruleset)
     {
-        var race   = Race.GetDefault(horsesInRace.Select(horse => new OwnedHorse { Horse = horse, Owner = null }));
+        var race   = Race.GetDefault(horsesInRace.Select(horse => new OwnedHorse { Horse = horse, Owner = null }), ruleset);
         
         var turnLimit = 100_000;
 

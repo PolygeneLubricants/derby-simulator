@@ -1,4 +1,5 @@
-﻿using System.CommandLine;
+﻿using Derby.Engine.Race.Ruleset;
+using System.CommandLine;
 
 namespace Derby.Simulator.Cmd;
 
@@ -22,17 +23,24 @@ public class OddsCommand
             IsRequired = false
         };
 
-        var oddsCommand = new Command("odds", "Calculates the odds of the specified group of horses running i races.")
+        var rulesetOption = new Option<RulesetType>(
+            name: "--r",
+            description: "Specify the ruleset/version of the board-game to run the simulation against.")
         {
-            horsesOption, heatsOption
+            IsRequired = true
         };
 
-        oddsCommand.SetHandler((horses, heats) =>
+        var oddsCommand = new Command("odds", "Calculates the odds of the specified group of horses running i races.")
+        {
+            horsesOption, heatsOption, rulesetOption
+        };
+
+        oddsCommand.SetHandler((horses, heats, ruleset) =>
         {
             var simulation = new Simulation();
-            simulation.RunCombinations(horses, heats);
+            simulation.RunCombinations(horses, heats, ruleset);
 
-        }, horsesOption, heatsOption);
+        }, horsesOption, heatsOption, rulesetOption);
 
         return oddsCommand;
     }

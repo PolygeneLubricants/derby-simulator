@@ -11,10 +11,12 @@ internal static class Derby2023GallopDeck
 {
     public static GallopCard GetCard(string title)
     {
-        return Deck.First(c => c.Title == title);
+        return Cards.First(c => c.Title == title);
     }
 
-    public static IList<GallopCard> Deck => new List<GallopCard>
+    public static GallopDeck Deck => new(Cards);
+
+    private static IList<GallopCard> Cards => new List<GallopCard>
     {
         new() { Title = "Fin galop",            Description = "Ryk to felter ekstra frem.",   CardEffect = new MoveEffect(2) },
         new() { Title = "Fin galop",            Description = "Ryk to felter ekstra frem.",   CardEffect = new MoveEffect(2) },

@@ -13,10 +13,12 @@ internal static class DrechslerChanceDeck
     /// </summary>
     public static ChanceCard GetCard(string title)
     {
-        return Deck.First(c => c.Title == title);
+        return Cards.First(c => c.Title == title);
     }
 
-    public static IList<ChanceCard> Deck => new List<ChanceCard>
+    public static ChanceDeck Deck => new(Cards);
+
+    private static IList<ChanceCard> Cards => new List<ChanceCard>
     {
         new()
         {

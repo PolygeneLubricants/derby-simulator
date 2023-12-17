@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using Derby.Engine.Race.Ruleset;
 
 namespace Derby.Simulator.Cmd;
 
@@ -22,16 +23,23 @@ public class ManyRaceCommand
             description: "Number of iterations (times) to run the race for the specified combination.",
             getDefaultValue: () => 1);
 
-        var manyCommand = new Command("many", "Run many Derby races and collect results for all games.")
+        var rulesetOption = new Option<RulesetType>(
+            name: "--r",
+            description: "Specify the ruleset/version of the board-game to run the simulation against.")
         {
-            combinationMode, sizeOption, iterationsOption
+            IsRequired = true
         };
 
-        manyCommand.SetHandler((mode, size, iterations) =>
+        var manyCommand = new Command("many", "Run many Derby races and collect results for all games.")
+        {
+            combinationMode, sizeOption, iterationsOption, rulesetOption
+        };
+
+        manyCommand.SetHandler((mode, size, iterations, ruleset) =>
         {
             var simulation = new Simulation();
-            simulation.RunCombinations(mode, size, iterations);
-        }, combinationMode, sizeOption, iterationsOption);
+            simulation.RunCombinations(mode, size, iterations, ruleset);
+        }, combinationMode, sizeOption, iterationsOption, rulesetOption);
 
         return manyCommand;
     }

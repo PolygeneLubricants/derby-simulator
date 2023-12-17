@@ -8,7 +8,9 @@ namespace Derby.Engine.Race.Ruleset.Variations.Derby2023;
 /// </summary>
 internal static class Derby2023ChanceDeck
 {
-    public static IList<ChanceCard> Deck => new List<ChanceCard>
+    public static ChanceDeck Deck => new(Cards);
+
+    private static IList<ChanceCard> Cards => new List<ChanceCard>
     {
         new()
         {
@@ -197,6 +199,6 @@ internal static class Derby2023ChanceDeck
     /// </summary>
     public static ChanceCard GetCard(string title)
     {
-        return Deck.First(c => c.Title == title);
+        return Cards.First(c => c.Title == title);
     }
 }
