@@ -1,4 +1,5 @@
-﻿using System.CommandLine;
+﻿using Derby.Engine.Race.Ruleset;
+using System.CommandLine;
 
 namespace Derby.Simulator.Cmd;
 
@@ -41,16 +42,23 @@ public class SingleRaceCommand
             AllowMultipleArgumentsPerToken = true
         };
 
-        var singleCommand = new Command("single", "Run a single Derby race and show the log for each movement.")
+        var rulesetOption = new Option<RulesetType>(
+            name: "--r",
+            description: "Specify the ruleset/version of the board-game to run the simulation against.")
         {
-            p1StableOptions, p2StableOptions, p3StableOptions, p4StableOptions, p5StableOptions
+            IsRequired = true
         };
 
-        singleCommand.SetHandler((p1, p2, p3, p4, p5) =>
+        var singleCommand = new Command("single", "Run a single Derby race and show the log for each movement.")
+        {
+            p1StableOptions, p2StableOptions, p3StableOptions, p4StableOptions, p5StableOptions, rulesetOption
+        };
+
+        singleCommand.SetHandler((p1, p2, p3, p4, p5, ruleset) =>
         {
             var simulation = new Simulation();
-            simulation.Run(p1, p2, p3, p4, p5);
-        }, p1StableOptions, p2StableOptions, p3StableOptions, p4StableOptions, p5StableOptions);
+            simulation.Run(p1, p2, p3, p4, p5, ruleset);
+        }, p1StableOptions, p2StableOptions, p3StableOptions, p4StableOptions, p5StableOptions, rulesetOption);
 
         return singleCommand;
     }

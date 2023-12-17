@@ -15,17 +15,6 @@ public class GallopDeck : BaseDeck<GallopCard>
     {
     }
 
-    /// <summary>
-    ///     The pre-defined deck of Gallop cards in the Derby board game.
-    /// </summary>
-    /// <returns></returns>
-    public static GallopDeck DefaultDeck()
-    {
-        var deck = new GallopDeck(DefaultGallopDeck.Deck);
-        deck.Shuffle();
-        return deck;
-    }
-
     /// <inheritdoc />
     protected override void RegisterDraw(HorseInRace drawingHorse)
     {

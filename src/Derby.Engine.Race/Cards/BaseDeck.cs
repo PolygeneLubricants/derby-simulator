@@ -59,7 +59,7 @@ public abstract class BaseDeck<T>
     /// <summary>
     ///     Shuffle the discard pile into the deck.
     /// </summary>
-    protected void Shuffle()
+    public void Shuffle()
     {
         var deck = new List<T>();
         deck.AddRange(Deck);

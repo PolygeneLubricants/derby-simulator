@@ -15,13 +15,6 @@ public class ChanceDeck : BaseDeck<ChanceCard>
     {
     }
 
-    public static ChanceDeck DefaultDeck()
-    {
-        var deck = new ChanceDeck(DefaultChanceDeck.Deck);
-        deck.Shuffle();
-        return deck;
-    }
-
     protected override void RegisterDraw(HorseInRace drawingHorse)
     {
         drawingHorse.ChanceCardsDrawn++;
