@@ -15,7 +15,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.Ruleset.Variations.Drechsler
         ///     are working as expected.
         /// </summary>
         [Theory]
-        [MemberData(nameof(SimulationTestData))]
+        [MemberData(nameof(DrechslerSimulationTestData))]
         public void RunGame_WhenSimulatingRealGame_ShouldMatchExpectedResult(
             IList<string> horseNamesToRegister,
             GallopDeck gallopDeckInRace,
@@ -55,7 +55,7 @@ namespace Derby.Engine.Race.FunctionalTests.Tests.Ruleset.Variations.Drechsler
             }
         }
 
-        public static IEnumerable<object[]> SimulationTestData()
+        public static IEnumerable<object[]> DrechslerSimulationTestData()
         {
             return new List<object[]>
             {
