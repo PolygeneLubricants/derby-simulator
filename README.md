@@ -6,6 +6,9 @@ betting, or management-parts between each race.
 The engine, however, has been designed in a way that makes it possible to extend with
 these parts.
 
+## Mobile friendly web-app
+To calculate odds for a given race, see the online version of this engine at [derbyapp.dk](https://www.derbyapp.dk/).
+
 ## How to run
 1. Compile the project and locate the exe output in the bin folder.
 
