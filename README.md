@@ -25,6 +25,7 @@ Commands:
   single  Run a single Derby race and show the log for each movement.
   random  Run a Derby race, where horses are chosen at random, and show the log for each movement.
   many    Run many Derby races and collect results for all games.
+  odds    Calculates the odds of the specified group of horses running i races.
 ```
 
 ### Single
@@ -36,12 +37,12 @@ Usage:
   Derby.Simulator single [options]
 
 Options:
-  --p1 <p1>       The stable of the first player. Indicate horse name. E.g. --p1 Avalon Isolde
-  --p2 <p2>       The stable of the second player. Indicate horse name. E.g. --p2 Avalon Isolde
-  --p3 <p3>       The stable of the third player. Indicate horse name. E.g. --p3 Avalon Isolde
-  --p4 <p4>       The stable of the fourth player. Indicate horse name. E.g. --p4 Avalon Isolde
-  --p5 <p5>       The stable of the fifth player. Indicate horse name. E.g. --p5 Avalon Isolde
-  -?, -h, --help  Show help and usage information
+  --p1 <p1>                                        The stable of the first player. Indicate horse name. E.g. --p1 Avalon Isolde
+  --p2 <p2>                                        The stable of the second player. Indicate horse name. E.g. --p2 Avalon Isolde
+  --p3 <p3>                                        The stable of the third player. Indicate horse name. E.g. --p3 Avalon Isolde
+  --p4 <p4>                                        The stable of the fourth player. Indicate horse name. E.g. --p4 Avalon Isolde
+  --p5 <p5>                                        The stable of the fifth player. Indicate horse name. E.g. --p5 Avalon Isolde
+  --r <Derby2023Traditional|Drechsler> (REQUIRED)  Specify the ruleset/version of the board-game to run the simulation
 ```
 
 ### Random
@@ -53,8 +54,10 @@ Usage:
   Derby.Simulator random [options]
 
 Options:
-  --c <c> (REQUIRED)  Number of horses to race. The horses will be equally distributed amongst the players 1 to 5.
-  -?, -h, --help      Show help and usage information
+  --c <c> (REQUIRED)                               Number of horses to race. The horses will be equally distributed
+                                                   amongst the players 1 to 5.
+  --r <Derby2023Traditional|Drechsler> (REQUIRED)  Specify the ruleset/version of the board-game to run the simulation
+                                                   against.
 ```
 
 ### Many
@@ -70,7 +73,8 @@ Options:
   --size <size> (REQUIRED)                              Race size. Number of horses in each race. From 1 to 5.
   --i <i>                                               Number of iterations (times) to run the race for the specified
                                                         combination. [default: 1]
-  -?, -h, --help                                        Show help and usage information
+  --r <Derby2023Traditional|Drechsler> (REQUIRED)       Specify the ruleset/version of the board-game to run the
+                                                        simulation against.
 ```
 
 ### Odds
@@ -82,10 +86,12 @@ Usage:
   Derby.Simulator odds [options]
 
 Options:
-  --horses <horses> (REQUIRED)  Names of the horses in the race. Indicate horses' names. E.g. --horses Avalon Isolde
-                                Whispering
-  --i <i>                       Number of iterations to run to calculate odds. Defaults to 1.000. [default: 1000]
-  -?, -h, --help                Show help and usage information
+  --horses <horses> (REQUIRED)                     Names of the horses in the race. Indicate horses' names. E.g.
+                                                   --horses Avalon Isolde Whispering
+  --i <i>                                          Number of iterations to run to calculate odds. Defaults to 1.000.
+                                                   [default: 1000]
+  --r <Derby2023Traditional|Drechsler> (REQUIRED)  Specify the ruleset/version of the board-game to run the simulation
+                                                   against.
 ```
 
 ## Command examples
@@ -116,6 +122,39 @@ Derby.Simulator many --mode all --size 5 --i 1
 ```
 Derby.Simulator many --mode twoyears --size 3 --i 1000
 ```
+
+## Rulesets / Board-game versions
+The simulator currently supports the two rulesets below.
+
+### Alga/Drechsler (1st edition Jägersro)
+The original Drechsler board-game (1st edition Jägersro).
+
+
+### Derby 2023 by Gameplay Publishing (2nd edition Jägersro), Traditional
+The 2023 Derby edition by Gameplay Publishing (2nd edition Jägersro) 
+in their game mode 'Tradition'. 
+
+The game mode, 'Modern' is *not* supported, as this game version has re-worded many
+Gallop cards to include _may_ instead of _must_, which adds an element of skill
+to the outcome of a given race. As such, the statistical variance will increase with
+this variable, and the outcome will be less predictable.
+
+The difference between the two game versions are few, but very significant:
+1. Derby 2023 has changed the Chance card, 'Hesten er halt' to a Gallop card. This
+change makes it much more likely to draw this card in general, from 1 in 30 to 1 in 20. 
+It also has an impact on horses that predominantly land on 
+either gallop fields (these will be eliminated more often or chance fields (these will be eliminated less).
+This makes a horse like Figaro even stronger, as it is, by far, the horse that lands on chance fields the most,
+where it can no longer get eliminated.
+
+2. Derby 2023 has removed the card 'Hesten falder tilbage'. This decision puts a winning bias
+on horses that gets an early head start, which would previously be punished more often.
+
+3. Derby 2023 has changed the wording on 'Stærkt tempo!', to repeat the horse's move if it's not in the lead,
+as opposed to the Drechsler phrasing, which moves the horse on-par with the leading horse.
+This is a very significant change, that heavily favors horses with a good program score-card
+(the total number of moves the horse has), over horses that often land on Gallop cards, such as 
+Caruso, Whispering and Castor.
 
 ## Rule interpretations
 This section is dedicated to the interpretations for rules which are 
