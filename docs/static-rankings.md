@@ -2,7 +2,7 @@
 Here you can find the static rankings for all horses racing against each other
 in heats of 5, for a total of 1.860.480 games. The starting horse is 
 uniformly distributed across games, such that all horses have an equal number
-of games running first through last. The statistics can be reproduced 
+of games running first, second, third, fourth and fifth. The statistics can be reproduced 
 by running the many-command in the Simulation program.
 
 The statistics are split into three versions, depending on house rules and
@@ -65,8 +65,8 @@ interpretations of Gallop-cards are by the new rulebook for Derby 2023.
 | Rapid      | 3     |  7%       |  31080 | 104081 |  86106 | 123471 |  87672 | 32710        | 0.09                    | 1.97                    |
 
 
-## Version 3, Gameplay Publishng Derby 2023 (Traditional)
-Below are the statistics based on the Gameplay Publish Derby 2023 game,
+## Version 3, Gameplay Publishing Derby 2023 (Traditional)
+Below are the statistics based on the Gameplay Publishing Derby 2023 game,
 in game mode Traditional (not modern).
 
 | Horse      | Years | Winning % | 1st    | 2nd    | 3rd    | 4th    | 5th    | Eliminations | Avg. Gallop cards drawn | Avg. Chance cards drawn |
